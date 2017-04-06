@@ -1,7 +1,5 @@
 defmodule ComposerBotTest.Pitch do
   use ExUnit.Case
+  doctest ComposerBot.Pitch
 
-  test "alskdjf" do
-    assert false
-  end
 end
