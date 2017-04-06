@@ -20,32 +20,14 @@ defmodule ComposerBot.Pitch do
 
   ## Examples
 
-    iex> ComposerBot.Pitch.to_lily_string(%ComposerBot.Pitch{note_num: 0, octave: 3})
-    "\\absolute {c}"
-
-    iex> ComposerBot.Pitch.to_lily_string(%ComposerBot.Pitch{note_num: 7, octave: 4})
+    iex> Pitch.to_lily_string(%Pitch{note_num: 7, octave: 4})
     "\\absolute {g'}"
 
-    iex> ComposerBot.Pitch.to_lily_string(%ComposerBot.Pitch{note_num: 4, octave: 2})
-    "\\absolute {e,}"
-
-    iex> ComposerBot.Pitch.to_lily_string(
-    ...>   %ComposerBot.Pitch{note_num: 8, alteration: 1})
+    iex> Pitch.to_lily_string(%Pitch{note_num: 8, alteration: 1})
     "\\absolute {gis}"
 
-    iex> ComposerBot.Pitch.to_lily_string(
-    ...>   %ComposerBot.Pitch{note_num: 10, alteration: -1})
-    "\\absolute {bes}"
-
-    iex> ComposerBot.Pitch.to_lily_string(
-    ...>   %ComposerBot.Pitch{note_num: 10, alteration: -1, octave: 4})
-    "\\absolute {bes'}"
-
-    iex> ComposerBot.Pitch.to_lily_string(
-    ...>   %ComposerBot.Pitch{note_num: 0, octave: 5})
-    "\\absolute {c''}"
-
   """
+  @lint {Credo.Check.Refactor.PipeChainStart, false}
   def to_lily_string(pitch) do
     octaves = if pitch.octave == @lily_default_octave do
       ""
@@ -63,31 +45,11 @@ defmodule ComposerBot.Pitch do
   @doc """
   ## Examples
 
-    # No alteration
-    iex> ComposerBot.Pitch.get_letter(%ComposerBot.Pitch{note_num: 0})
+    iex> Pitch.get_letter(%Pitch{note_num: 0})
     'c'
 
-    iex> ComposerBot.Pitch.get_letter(%ComposerBot.Pitch{note_num: 11})
-    'b'
-
-    # With alterations
-    iex> ComposerBot.Pitch.get_letter(%ComposerBot.Pitch{note_num: 1, alteration: 1})
-    'c'
-
-    iex> ComposerBot.Pitch.get_letter(%ComposerBot.Pitch{note_num: 0, alteration: 1})
-    'b'
-
-    iex> ComposerBot.Pitch.get_letter(%ComposerBot.Pitch{note_num: 6, alteration: 1})
-    'f'
-
-    iex> ComposerBot.Pitch.get_letter(%ComposerBot.Pitch{note_num: 6, alteration: -1})
+    iex> Pitch.get_letter(%Pitch{note_num: 6, alteration: -1})
     'g'
-
-    iex> ComposerBot.Pitch.get_letter(%ComposerBot.Pitch{note_num: 2, alteration: 2})
-    'c'
-
-    iex> ComposerBot.Pitch.get_letter(%ComposerBot.Pitch{note_num: 9, alteration: -2})
-    'b'
 
   """
   def get_letter(%{note_num: note_num, alteration: alteration}) do
