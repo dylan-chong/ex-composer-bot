@@ -1,8 +1,6 @@
 defmodule ComposerBot.Pitch do
   @moduledoc """
-  Represents a single note
-
-  TODO rhythm
+  Represents a single pitch (no length, no rest).
   """
 
   alias ComposerBot.Pitch, as: Pitch
@@ -11,31 +9,30 @@ defmodule ComposerBot.Pitch do
   @lily_default_octave 3
 
   @doc """
-  * :note_num The number of the semitone where 0 is 'C' and 11 is 'B'. This includes
-              the alteration, so 1 will be c# or db
-  * :octave Middle C, and all notes up to (and including) the next B, has number 4
-  * :alteration The accidental - 0 for natural, -1 for flat, and 1 for sharp
+  * :note_num - The number of the semitone where 0 is 'C' and 11 is 'B'. This
+  includes the alteration, so 1 will be c# or db
+  * :octave - Middle C, and all notes up to (and including) the next B, has
+  number 4
+  * :alteration - The accidental - 0 for natural, -1 for flat, and 1 for sharp
   """
-  @type t :: %Pitch{
-    note_num: integer, octave: integer, alteration: integer
-  }
+  @type t :: %Pitch{note_num: integer, octave: integer, alteration: integer}
   @enforce_keys [:note_num]
   defstruct [:note_num, octave: @lily_default_octave, alteration: 0]
 
   @doc """
-  Exports this pitch to a format that can be pasted into LilyPond
+  Exports this `Pitch` to a format that can be pasted into LilyPond
 
   ## Examples
 
     iex> Pitch.to_lily_string(%Pitch{note_num: 7, octave: 4})
-    "\\absolute {g'}"
+    "g'"
 
     iex> Pitch.to_lily_string(%Pitch{note_num: 8, alteration: 1})
-    "\\absolute {gis}"
+    "gis"
 
   """
   @lint {Credo.Check.Refactor.PipeChainStart, false}
-  @spec to_lily_string(ComposerBot.Pitch.t) :: String.t
+  @spec to_lily_string(t) :: String.t
   def to_lily_string(pitch) do
     octaves = if pitch.octave == @lily_default_octave do
       ""
@@ -46,8 +43,7 @@ defmodule ComposerBot.Pitch do
       |> to_string()
     end
 
-    # The '\' is literal for some reason
-    "\absolute {#{get_letter(pitch)}#{alteration_to_string(pitch)}#{octaves}}"
+    "#{get_letter(pitch)}#{alteration_to_string(pitch)}#{octaves}"
   end
 
   @doc """
@@ -60,7 +56,7 @@ defmodule ComposerBot.Pitch do
     'g'
 
   """
-  @spec get_letter(Pitch.t) :: charlist
+  @spec get_letter(t) :: charlist
   def get_letter(%Pitch{note_num: note_num, alteration: alteration}) do
     case rem(note_num - alteration + 12, 12) do
       0 -> 'c'
