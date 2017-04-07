@@ -1,5 +1,7 @@
 defmodule ComposerBotTest.Voice do
-  use ExUnit.Case
+  @moduledoc false
+
+  use ExUnit.Case, async: true
   alias ComposerBot.{Voice, Note, Pitch}
 
   describe "sequence of notes outputs correct LilyPond format" do

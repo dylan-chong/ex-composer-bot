@@ -58,7 +58,20 @@ defmodule ComposerBot.Pitch do
   """
   @spec get_letter(t) :: charlist
   def get_letter(%Pitch{note_num: note_num, alteration: alteration}) do
-    case rem(note_num - alteration + 12, 12) do
+    # Add 12 to account for the possibility of negative numbers
+    get_letter(rem(note_num - alteration + 12, 12))
+  end
+
+  @doc """
+  Gets the letter for a given `note_num`.
+
+  The alteration should have been accounted for when this method is called
+  because this method only accepts natural notes. The note_num of `dis` will
+  cause an error to be thrown, and the note_num of `cisis` will return `'d'`).
+  """
+  @spec get_letter(integer) :: charlist
+  def get_letter(note_num) when is_number(note_num) do
+    case note_num do
       0 -> 'c'
       2 -> 'd'
       4 -> 'e'
@@ -66,7 +79,7 @@ defmodule ComposerBot.Pitch do
       7 -> 'g'
       9 -> 'a'
       11 -> 'b'
-      _ -> raise "Alteration #{alteration} is impossible for note #{note_num}"
+      _ -> raise "note_num #{note_num} is not natural"
     end
   end
 
@@ -83,6 +96,15 @@ defmodule ComposerBot.Pitch do
       -2 -> "eses" # double flat
       _ -> raise "Invalid alteration %{alteration}"
     end
+  end
+
+  @spec letters :: list(String.grapheme)
+  def letters do
+    String.graphemes("cdefgab")
+  end
+
+  def c_major_note_nums do
+    [0, 2, 4, 5, 7, 9, 11]
   end
 
 end

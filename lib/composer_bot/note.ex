@@ -24,6 +24,7 @@ defmodule ComposerBot.Note do
   def to_lily_string(%Note{pitch: pitch, length: length, tied: tied}) do
     note_base = Pitch.to_lily_string(pitch)
     tied_string = if tied, do: "~", else: ""
+    # TODO ? move \absolute into voice
     "\absolute {#{note_base}#{length}#{tied_string}}"
   end
 end
