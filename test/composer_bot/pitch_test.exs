@@ -2,10 +2,10 @@ defmodule ComposerBotTest.Pitch do
   use ExUnit.Case, async: true
   alias ComposerBot.Pitch, as: Pitch
 
-  doctest ComposerBot.Pitch, import: true
+  doctest Pitch, import: true
 
-  describe "to_lily_string returns correct format for LilyPond:" do
-    test "octave below middle c" do
+  describe "to_lily_string returns LilyPond format for a note" do
+    test "an octave below middle c" do
       p = %Pitch{note_num: 0, octave: 3}
       # The '\' is literal
       assert Pitch.to_lily_string(p) ==  "\absolute {c}"
@@ -42,7 +42,7 @@ defmodule ComposerBotTest.Pitch do
     end
   end
 
-  describe "get_letter returns correct letter even with alterations: " do
+  describe "get_letter returns base letter for note" do
     test "c" do
       p = %Pitch{note_num: 0}
       assert Pitch.get_letter(p) == 'c'
@@ -53,22 +53,22 @@ defmodule ComposerBotTest.Pitch do
       assert Pitch.get_letter(p) == 'b'
     end
 
-    test "cis returns c" do
+    test "cis" do
       p = %Pitch{note_num: 1, alteration: 1}
       assert Pitch.get_letter(p) == 'c'
     end
 
-    test "bis returns b (not c)" do
+    test "bis (returns b, not c)" do
       p = %Pitch{note_num: 0, alteration: 1}
       assert Pitch.get_letter(p) == 'b'
     end
 
-    test "fis returns b" do
+    test "fis" do
       p = %Pitch{note_num: 6, alteration: 1}
       assert Pitch.get_letter(p) == 'f'
     end
 
-    test "ges returns g" do
+    test "ges" do
       p = %Pitch{note_num: 6, alteration: -1}
       assert Pitch.get_letter(p) == 'g'
     end
@@ -82,7 +82,6 @@ defmodule ComposerBotTest.Pitch do
       p = %Pitch{note_num: 9, alteration: -2}
       assert Pitch.get_letter(p) == 'b'
     end
-
   end
 
 end

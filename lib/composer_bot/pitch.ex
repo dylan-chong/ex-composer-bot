@@ -1,9 +1,13 @@
 defmodule ComposerBot.Pitch do
   @moduledoc """
   Represents a single note
+
+  TODO rhythm
   """
 
-  @doc "LilyPond's default octave number"
+  alias ComposerBot.Pitch, as: Pitch
+
+  # LilyPond's default octave number"
   @lily_default_octave 3
 
   @doc """
@@ -12,6 +16,9 @@ defmodule ComposerBot.Pitch do
   * :octave Middle C, and all notes up to (and including) the next B, has number 4
   * :alteration The accidental - 0 for natural, -1 for flat, and 1 for sharp
   """
+  @type t :: %Pitch{
+    note_num: integer, octave: integer, alteration: integer
+  }
   @enforce_keys [:note_num]
   defstruct [:note_num, octave: @lily_default_octave, alteration: 0]
 
@@ -28,6 +35,7 @@ defmodule ComposerBot.Pitch do
 
   """
   @lint {Credo.Check.Refactor.PipeChainStart, false}
+  @spec to_lily_string(ComposerBot.Pitch.t) :: String.t
   def to_lily_string(pitch) do
     octaves = if pitch.octave == @lily_default_octave do
       ""
@@ -52,7 +60,8 @@ defmodule ComposerBot.Pitch do
     'g'
 
   """
-  def get_letter(%{note_num: note_num, alteration: alteration}) do
+  @spec get_letter(Pitch.t) :: charlist
+  def get_letter(%Pitch{note_num: note_num, alteration: alteration}) do
     case rem(note_num - alteration + 12, 12) do
       0 -> 'c'
       2 -> 'd'
@@ -68,7 +77,8 @@ defmodule ComposerBot.Pitch do
   @doc """
   Converts the alteration/accidental to LilyPond format
   """
-  def alteration_to_string(%{alteration: alteration}) do
+  @spec alteration_to_string(Pitch.t) :: String.t
+  def alteration_to_string(%Pitch{alteration: alteration}) do
     case alteration do
       0 -> "" # natural
       1 -> "is" # sharp
