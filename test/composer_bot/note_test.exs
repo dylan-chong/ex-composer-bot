@@ -5,10 +5,11 @@ defmodule ComposerBotTest.Note do
   alias ComposerBot.{Note, Pitch}
 
   describe "to_lily_string returns correct LilyPond for a" do
-    # These tests assume ComposerBot.Pitch.to_lily_string works correctly
+    # These tests assume `Pitch.to_lily_string` works correctly
 
     test "crotchet c one octave below middle c" do
       n = %Note{pitch: %Pitch{note_num: 0}, length: 4}
+      # The '\' is literal
       assert Note.to_lily_string(n) == "\absolute {c4}"
     end
 
