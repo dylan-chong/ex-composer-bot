@@ -1,12 +1,12 @@
 # Composition bot #
 
 ## TODOs ##
-- Be able to output a scale by entering in numbers 0-7
-- Data structure
-  - Note/key structre
-  - Data export
-  - See [Lily Pond](https://github.com/lilypond/lilypond)
 - Some simple generation process
+- Rule of the octave
+- Cadences
+- Rests
+- Remove parallels
+- Data export
 
 ## Composition Process ##
 

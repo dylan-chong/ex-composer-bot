@@ -17,8 +17,8 @@ defmodule ComposerBotTest.Voice do
 
     test "for two notes" do
       v = %Voice{notes: [
-        %Note{pitch: %Pitch{note_num: 0}},
-        %Note{pitch: %Pitch{note_num: 1, alteration: 1}}
+        %Note{pitch: %Pitch{note_num: 1, alteration: 1}},
+        %Note{pitch: %Pitch{note_num: 0}}
       ]}
       assert Voice.to_lily_string(v) == "\absolute {c4} \absolute {cis4}"
     end

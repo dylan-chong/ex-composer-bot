@@ -10,7 +10,8 @@ defmodule ComposerBot.Pitch do
 
   @doc """
   * :note_num - The number of the semitone where 0 is 'C' and 11 is 'B'. This
-  includes the alteration, so 1 will be c# or db
+  includes the alteration, so 1 will be c# or db. (This should really be
+  called `:pitch_num`.)
   * :octave - Middle C, and all notes up to (and including) the next B, has
   number 4
   * :alteration - The accidental - 0 for natural, -1 for flat, and 1 for sharp
@@ -103,8 +104,14 @@ defmodule ComposerBot.Pitch do
     String.graphemes("cdefgab")
   end
 
+  @spec c_major_note_nums :: list(integer)
   def c_major_note_nums do
     [0, 2, 4, 5, 7, 9, 11]
+  end
+
+  def equals_ignore_octave(pitch_a, pitch_b) do
+    pitch_a.note_num == pitch_b.note_num &&
+    pitch_a.alteration == pitch_b.alteration
   end
 
 end
