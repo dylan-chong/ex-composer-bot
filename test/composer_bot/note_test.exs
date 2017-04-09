@@ -35,12 +35,25 @@ defmodule ComposerBotTest.Note do
 
     test "tied note" do
       n = %Note{pitch: %Pitch{note_num: 7}, tied: true}
-      assert Note.to_lily_string(n) == "g4~"
+      assert Note.to_lily_string(n) == "g~4"
     end
 
     test "rest" do
       n = %Note{pitch: nil}
       assert Note.to_lily_string(n) == "r4"
+    end
+
+    test "chord with 2 notes" do
+      chord = %Note{pitch: %Pitch{note_num: 0},
+                note_above: %Note{pitch: %Pitch{note_num: 2}}}
+      assert Note.to_lily_string(chord) == "<c d>4"
+    end
+
+    test "chord with 3 notes and an accidental" do
+      top = %Note{pitch: %Pitch{note_num: 3, alteration: -1}, note_above: nil}
+      middle = %Note{pitch: %Pitch{note_num: 2}, note_above: top}
+      bottom = %Note{pitch: %Pitch{note_num: 0}, note_above: middle}
+      assert Note.to_lily_string(bottom) == "<c d ees>4"
     end
 
   end
