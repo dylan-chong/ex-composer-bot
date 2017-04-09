@@ -11,16 +11,27 @@ defmodule ComposerBotTest.Voice do
       v = %Voice{notes: [
         %Note{pitch: %Pitch{note_num: 0}}
       ]}
-      # The '\' is literal
-      assert Voice.to_lily_string(v) == "\absolute {c4}"
+      assert Voice.to_lily_string(v) == """
+      \\absolute \\new Voice {
+        c4
+      }
+      """
     end
 
     test "for two notes" do
+      # Notes are in reverse order
       v = %Voice{notes: [
         %Note{pitch: %Pitch{note_num: 1, alteration: 1}},
         %Note{pitch: %Pitch{note_num: 0}}
       ]}
-      assert Voice.to_lily_string(v) == "\absolute {c4} \absolute {cis4}"
+      # Assume Voice.into_voice_string works properly if the "for one note"
+      # test passes
+      assert Voice.to_lily_string(v) == Voice.into_voice_string("c4 cis4")
+    end
+
+    test "for zero notes" do
+      v = %Voice{notes: []}
+      assert Voice.to_lily_string(v) == Voice.into_voice_string("")
     end
 
   end

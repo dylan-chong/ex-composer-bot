@@ -22,10 +22,14 @@ defmodule ComposerBot.Note do
   Exports this `Note` to a format that can be pasted into LilyPond
   """
   @spec to_lily_string(t) :: String.t
+  def to_lily_string(%Note{pitch: nil, length: length}) do
+    "r#{length}"
+  end
+
   def to_lily_string(%Note{pitch: pitch, length: length, tied: tied}) do
     note_base = Pitch.to_lily_string(pitch)
     tied_string = if tied, do: "~", else: ""
-    # TODO ? move \absolute into voice
-    "\absolute {#{note_base}#{length}#{tied_string}}"
+    "#{note_base}#{length}#{tied_string}"
   end
+
 end

@@ -1,6 +1,7 @@
 defmodule ComposerBot.Scale do
-@moduledoc """
-  Methods to generate `Pitch` structs
+  @moduledoc """
+  Methods to generate lists of `Pitch` structs.
+  A scale type ignores octaves
   """
 
   alias ComposerBot.{Scale, Pitch}
