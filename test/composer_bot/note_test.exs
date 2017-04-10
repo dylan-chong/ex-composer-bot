@@ -9,7 +9,6 @@ defmodule ComposerBotTest.Note do
 
     test "crotchet c one octave below middle c" do
       n = %Note{pitch: %Pitch{note_num: 0}, length: 4}
-      # The '\' is literal
       assert Note.to_lily_string(n) == "c4"
     end
 
