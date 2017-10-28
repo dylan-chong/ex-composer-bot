@@ -30,4 +30,5 @@ defmodule ComposerBotTest.FileExport do
   defp string_tokens(string) do
     String.split(string, ~r{\s}, [trim: true])
   end
+
 end
