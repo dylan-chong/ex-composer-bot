@@ -26,4 +26,5 @@ defmodule ComposerBot.ChoraleGenerator do
 
   # TODO NEXT rule of the octave generator
 
+
 end
