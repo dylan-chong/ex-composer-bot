@@ -35,4 +35,5 @@ defmodule ComposerBot.Mixfile do
   defp deps do
     [{:credo, "~> 0.8.8", only: [:dev, :test]}]
   end
+
 end

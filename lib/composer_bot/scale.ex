@@ -18,7 +18,7 @@ defmodule ComposerBot.Scale do
     end
 
     Pitch.c_major_note_nums()
-    # TODO transpose into other keys
+    # TODO SOMETIME transpose into other keys
     |> Enum.map(fn num -> %Pitch{note_num: num} end)
   end
 
@@ -37,12 +37,30 @@ defmodule ComposerBot.Scale do
     find_degree(scale, current_pitch, -1)
   end
 
-  # index_difference - 1 to go up, -1 to go down. Probably won't
-  # work for numbers greater than the size of the scale
-  defp find_degree(scale, current_pitch, index_difference) do
-    last_pitch_index = Enum.find_index(scale, fn pitch ->
+  @doc """
+  Gets the index of the pitch in the scale.
+
+    iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 0})
+    0
+
+    iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 5})
+    3
+  """
+  @spec degree_of(t, Pitch.t) :: Pitch.t
+  def degree_of(scale, pitch) do
+    Enum.find_index(scale, fn current_pitch ->
       Pitch.equals_ignore_octave(pitch, current_pitch)
-    end)
+    end) || raise ArgumentError
+  end
+
+  defp find_degree(scale, current_pitch, index_difference)
+      when abs(index_difference) >= 8 do
+    find_degree(scale, current_pitch, rem(index_difference, 8))
+  end
+
+  # index_difference - 1 to go up, -1 to go down
+  defp find_degree(scale, current_pitch, index_difference) do
+    last_pitch_index = degree_of(scale, current_pitch)
 
     new_pitch_index = last_pitch_index + index_difference
     new_pitch_octave = current_pitch.octave + cond do

@@ -2,6 +2,7 @@ defmodule ComposerBotTest.Scale do
   @moduledoc false
   use ExUnit.Case, async: true
   alias ComposerBot.{Scale, Pitch}
+  doctest Scale, import: true
 
   describe "major_scale starting on" do
     test "c" do
@@ -15,6 +16,7 @@ defmodule ComposerBotTest.Scale do
                    %Pitch{note_num: 11}]
     end
 
+    # TODO Different scales not implemented yet
     # test "g major" do
       # s = Scale.c_major_scale()
       # assert s == [%Pitch{note_num: 7},
