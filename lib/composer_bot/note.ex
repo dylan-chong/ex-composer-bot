@@ -3,7 +3,6 @@ defmodule ComposerBot.Note do
   A wrapper around `ComposerBot.Pitch`. A note can be a rest, and must have a
   length.
   """
-  # TODO put scale degree or something here
 
   alias ComposerBot.{Note, Pitch}
 

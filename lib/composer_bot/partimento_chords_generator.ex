@@ -1,7 +1,6 @@
-defmodule ComposerBot.ChoraleGenerator do
+defmodule ComposerBot.PartimentoChordsGenerator do
   @moduledoc """
-  Generates basic chorales
-  TODO rename to PartimentoChordsGenerator
+  Generates the chords and basic bassline for a Partimento.
   """
 
   alias ComposerBot.{Scale, Note, Voice}
@@ -24,7 +23,5 @@ defmodule ComposerBot.ChoraleGenerator do
     [new_note | notes]
     |> generate_bass(scale, notes_left - 1)
   end
-
-  # TODO NEXT rule of the octave generator
 
 end

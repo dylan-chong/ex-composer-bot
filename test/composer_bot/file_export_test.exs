@@ -18,8 +18,8 @@ defmodule ComposerBotTest.FileExport do
     end
 
     test "temp" do
-      alias ComposerBot.{ChoraleGenerator}
-      bass = ChoraleGenerator.generate_bass
+      alias ComposerBot.{PartimentoChordsGenerator}
+      bass = PartimentoChordsGenerator.generate_bass
       s = FileExport.to_lily_string [bass, bass]
       IO.puts "\n\n\n#{s}\n\n\n"
       require IEx

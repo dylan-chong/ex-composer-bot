@@ -1,8 +1,10 @@
 # Composition bot #
 
 ## TODOs ##
-- Some simple generation process
-- Rule of the octave
+- NEXT PartimentoChordsGenerator
+  - Rule of the octave
+    - Then try randomised stepping bass notes
+  - Look at schemas on openmusictheory
 - Cadences
 - Rests
 - Remove parallels
@@ -25,7 +27,7 @@
     - |> Collect to Intent (returned)
   - |> Bass line (plain) out of nowhere (or from intent)
     - ¿Maybe merge with block chords?
-  - |> Bass line (plain) => Figured bass symbols 
+  - |> Bass line (plain) => Figured bass symbols
     - See Partimento Realisation
       - Insanguine PDF
         - Rule of the Octave
