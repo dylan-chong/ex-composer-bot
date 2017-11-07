@@ -23,7 +23,7 @@ defmodule ComposerBot.Scale do
   end
 
   @spec c_major_scale() :: t
-  def c_major_scale() do
+  def c_major_scale do
     Scale.major_scale(%Pitch{note_num: 0})
   end
 

@@ -32,14 +32,14 @@ defmodule ComposerBot.Pitch do
     "gis"
 
   """
-  @lint {Credo.Check.Refactor.PipeChainStart, false}
   @spec to_lily_string(t) :: String.t
   def to_lily_string(pitch) do
     octaves = if pitch.octave == @lily_default_octave do
       ""
     else
       char = if pitch.octave < @lily_default_octave, do: ',', else: '\''
-      Stream.repeatedly(fn -> char end)
+      fn -> char end
+      |> Stream.repeatedly()
       |> Enum.take(abs(pitch.octave - @lily_default_octave))
       |> to_string()
     end

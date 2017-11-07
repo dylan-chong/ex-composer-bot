@@ -1,4 +1,5 @@
-defmodule ComposerBot.Application do # See http://elixir-lang.org/docs/stable/elixir/Application.html
+defmodule ComposerBot.Application do
+  # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
 
@@ -9,7 +10,8 @@ defmodule ComposerBot.Application do # See http://elixir-lang.org/docs/stable/el
 
     # Define workers and child supervisors to be supervised
     children = [
-      # Starts a worker by calling: ComposerBot.Worker.start_link(arg1, arg2, arg3)
+      # Starts a worker by calling:
+      #   ComposerBot.Worker.start_link(arg1, arg2, arg3)
       # worker(ComposerBot.Worker, [arg1, arg2, arg3]),
     ]
 
