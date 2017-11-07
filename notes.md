@@ -1,14 +1,15 @@
 # Composition bot #
 
 ## TODOs ##
-- NEXT PartimentoChordsGenerator
+- PartimentoChordsGenerator
   - Rule of the octave
     - Then try randomised stepping bass notes
   - Look at schemas on openmusictheory
+- Data export
+- Create pitches from string
 - Cadences
 - Rests
 - Remove parallels
-- Data export
 
 ## Composition Process ##
 
