@@ -53,12 +53,8 @@ defmodule ComposerBot.Scale do
     end) || raise ArgumentError
   end
 
-  @doc """
-    iex> Scale.steps_between(:TODO)
-    :TODO
-  """
-  def steps_between(scale, start_note, end_note) do
-    # TODO Next right tests then implement
+  def steps_between(scale, start = %Pitch{}, end = %Pitch{}) do
+    # TODO NEXT I've implemented tests, so implement this next
   end
 
   defp find_degree(scale, current_pitch, index_difference)
