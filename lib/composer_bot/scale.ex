@@ -53,7 +53,7 @@ defmodule ComposerBot.Scale do
     end) || raise ArgumentError
   end
 
-  def steps_between(scale, start = %Pitch{}, end = %Pitch{}) do
+  def steps_between(scale, startp = %Pitch{}, endp = %Pitch{}) do
     # TODO NEXT I've implemented tests, so implement this next
   end
 

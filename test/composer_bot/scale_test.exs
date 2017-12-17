@@ -82,73 +82,69 @@ defmodule ComposerBotTest.Scale do
     end
   end
 
-  describe "steps_between should return correct value for" do
-    describe "c_major_scale with" do
+  describe "steps_between on c_major_scale is correct for" do
+    test "c to c on same octave" do
+      assert 0 == Scale.steps_between(
+        Scale.c_major_scale(),
+        Scale.c_major_scale() |> elem(0),
+        Scale.c_major_scale() |> elem(0)
+      )
+    end
 
-      test "c to c on same octave" do
-        assert 0 == Scale.steps_between(
-          Scale.c_major_scale(),
-          Scale.c_major_scale() |> elem(0),
-          Scale.c_major_scale() |> elem(0)
-        )
-      end
+    test "c to e" do
+      assert 2 == Scale.steps_between(
+        Scale.c_major_scale(),
+        Scale.c_major_scale() |> elem(0),
+        Scale.c_major_scale() |> elem(2)
+      )
+    end
 
-      test "c to e" do
-        assert 2 == Scale.steps_between(
-          Scale.c_major_scale(),
-          Scale.c_major_scale() |> elem(0),
-          Scale.c_major_scale() |> elem(2),
-        )
-      end
+    test "b down to g" do
+      assert -2 == Scale.steps_between(
+        Scale.c_major_scale(),
+        Scale.c_major_scale() |> elem(6),
+        Scale.c_major_scale() |> elem(4)
+      )
+    end
 
-      test "b down to g" do
-        assert -2 == Scale.steps_between(
-          Scale.c_major_scale(),
-          Scale.c_major_scale() |> elem(6),
-          Scale.c_major_scale() |> elem(4)
-        )
-      end
+    test "c up to b" do
+      assert 6 == Scale.steps_between(
+        Scale.c_major_scale(),
+        Scale.c_major_scale() |> elem(0),
+        Scale.c_major_scale() |> elem(6)
+      )
+    end
 
-      test "c up to b" do
-        assert 6 == Scale.steps_between(
-          Scale.c_major_scale(),
-          Scale.c_major_scale() |> elem(0),
-          Scale.c_major_scale() |> elem(6)
-        )
-      end
+    test "c down to b" do
+      assert -1 == Scale.steps_between(
+        Scale.c_major_scale(),
+        %Pitch{note_num: 0, octave: 3},
+        %Pitch{note_num: 11, octave: 2}
+      )
+    end
 
-      test "c down to b" do
-        assert -1 == Scale.steps_between(
-          Scale.c_major_scale(),
-          %Pitch{note_num: 0, octave: 3},
-          %Pitch{note_num: 11, octave: 2}
-        )
-      end
+    test "c to c down an octave" do
+      assert -7 == Scale.steps_between(
+        Scale.c_major_scale(),
+        %Pitch{note_num: 0, octave: 4},
+        %Pitch{note_num: 0, octave: 3}
+      )
+    end
 
-      test "c to c down an octave" do
-        assert -7 == Scale.steps_between(
-          Scale.c_major_scale(),
-          %Pitch{note_num: 0, octave: 4},
-          %Pitch{note_num: 0, octave: 3}
-        )
-      end
+    test "e to d on a non-default octave" do
+      assert -1 == Scale.steps_between(
+        Scale.c_major_scale(),
+        %Pitch{note_num: 4, octave: 4},
+        %Pitch{note_num: 3, octave: 3}
+      )
+    end
 
-      test "e to d on a non-default octave" do
-        assert -1 == Scale.steps_between(
-          Scale.c_major_scale(),
-          %Pitch{note_num: 4, octave: 4},
-          %Pitch{note_num: 3, octave: 3}
-        )
-      end
-
-      test "note not in scale (should throw)" do
-        assert_raise fn -> Scale.steps_between(
-          Scale.c_major_scale(),
-          %Pitch{note_num: 1, octave: 4, alteration: 1}, # c sharp
-          %Pitch{note_num: 3, octave: 3}
-        ) end
-      end
-
+    test "note not in scale (should throw)" do
+      assert_raise ArgumentError, fn -> Scale.steps_between(
+        Scale.c_major_scale(),
+        %Pitch{note_num: 1, octave: 4, alteration: 1}, # c sharp
+        %Pitch{note_num: 3, octave: 3}
+      ) end
     end
   end
 
