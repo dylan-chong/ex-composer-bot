@@ -29,12 +29,12 @@ defmodule ComposerBot.Scale do
 
   @spec degree_above(t, Pitch.t) :: Pitch.t
   def degree_above(scale, current_pitch) do
-    find_degree(scale, current_pitch, 1)
+    find_pitch(scale, current_pitch, 1)
   end
 
   @spec degree_below(t, Pitch.t) :: Pitch.t
   def degree_below(scale, current_pitch) do
-    find_degree(scale, current_pitch, -1)
+    find_pitch(scale, current_pitch, -1)
   end
 
   @doc """
@@ -50,20 +50,32 @@ defmodule ComposerBot.Scale do
   def degree_of(scale, pitch) do
     Enum.find_index(scale, fn current_pitch ->
       Pitch.equals_ignore_octave(pitch, current_pitch)
-    end) || raise ArgumentError
+    end) || raise(
+      ArgumentError,
+      "pitch (#{inspect(pitch)}) not in scale (#{inspect(pitch)})"
+    )
   end
 
   def steps_between(scale, startp = %Pitch{}, endp = %Pitch{}) do
-    # TODO NEXT I've implemented tests, so implement this next
+    octave_diff = endp.octave - startp.octave
+    if octave_diff != 0 do
+      octave_diff * length(scale) + steps_between(
+        scale,
+        %Pitch{startp | octave: startp.octave + octave_diff},
+        endp
+      )
+    else
+      degree_of(scale, endp) - degree_of(scale, startp)
+    end
   end
 
-  defp find_degree(scale, current_pitch, index_difference)
+  defp find_pitch(scale, current_pitch, index_difference)
       when abs(index_difference) >= 8 do
-    find_degree(scale, current_pitch, rem(index_difference, 8))
+    raise ArgumentError, "invalid index_difference: #{index_difference}"
   end
 
   # index_difference - 1 to go up, -1 to go down
-  defp find_degree(scale, current_pitch, index_difference) do
+  defp find_pitch(scale, current_pitch, index_difference) do
     last_pitch_index = degree_of(scale, current_pitch)
 
     new_pitch_index = last_pitch_index + index_difference
