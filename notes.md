@@ -1,12 +1,16 @@
 # Composition bot #
 
 ## TODOs ##
+- Finish PartimentoChordsGenerator next_chord
+  - Requires representing chord as roman numeral - **TODO NEXT make Chord a protocol**
+- Create pitches from string
+- Make scale a struct (for future maintainability)
+
 - PartimentoChordsGenerator
   - Rule of the octave
     - Then try randomised stepping bass notes
   - Look at schemas on openmusictheory
 - Data export
-- Create pitches from string
 - Cadences
 - Rests
 - Remove parallels
@@ -46,3 +50,5 @@
 ## Other Notes ##
 
 - Do chorales first
+
+- Make the non composing stuff its own library
