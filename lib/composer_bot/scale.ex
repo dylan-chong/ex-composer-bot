@@ -14,11 +14,11 @@ defmodule ComposerBot.Scale do
   @spec major_scale(Pitch.t) :: t
   def major_scale(%Pitch{note_num: base_note_num, alteration: base_alt}) do
     if base_note_num != 0 || base_alt != 0 do
+      # TODO SOMETIME transpose into other keys
       raise "NYI"
     end
 
     Pitch.c_major_note_nums()
-    # TODO SOMETIME transpose into other keys
     |> Enum.map(fn num -> %Pitch{note_num: num} end)
   end
 
@@ -40,11 +40,11 @@ defmodule ComposerBot.Scale do
   @doc """
   Gets the index of the pitch in the scale.
 
-    iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 0})
-    0
+  iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 0})
+  0
 
-    iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 5})
-    3
+  iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 5})
+  3
   """
   @spec degree_of(t, Pitch.t) :: Pitch.t
   def degree_of(scale, pitch) do
@@ -74,7 +74,7 @@ defmodule ComposerBot.Scale do
     raise ArgumentError, "invalid index_difference: #{index_difference}"
   end
 
-  # index_difference - 1 to go up, -1 to go down
+  # index_difference: 1 to go up, -1 to go down
   defp find_pitch(scale, current_pitch, index_difference) do
     last_pitch_index = degree_of(scale, current_pitch)
 

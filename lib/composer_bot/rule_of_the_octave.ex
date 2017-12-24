@@ -14,7 +14,7 @@ defmodule ComposerBot.RuleOfTheOctave do
       |> List.first
       |> Keyword.fetch!(:note)
     steps = Scale.steps_between(scale, current_bass, next_bass)
-    # TODO AFTER New steps to create triad with inversions
+    # TODO New steps to create triad with inversions
 #     inversion =
 #       case Scale.degree_of(next_bass) do
 #         0 -> 0
