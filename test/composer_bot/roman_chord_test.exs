@@ -5,20 +5,32 @@ defmodule ComposerBotTest.RomanChordTest do
 
   describe "new" do
     test "successfully creates" do
-      RomanChord.new(0, 0, Scale.c_major_scale())
-    end
-
-    test "new fails on bad inversion root" do
-      assert_raise(
-        FunctionClauseError,
-        fn -> RomanChord.new(-1, 0, Scale.c_major_scale()) end
+      RomanChord.new(
+        root: 0,
+        inversion: 0,
+        scale: Scale.c_major_scale()
       )
     end
 
-    test "new fails on bad root" do
+    test "fails on bad inversion root" do
       assert_raise(
-        FunctionClauseError,
-        fn -> RomanChord.new(0, -1, Scale.c_major_scale()) end
+        ArgumentError,
+        fn -> RomanChord.new(
+          root: -1,
+          inversion: 0,
+          scale: Scale.c_major_scale()
+        ) end
+      )
+    end
+
+    test "fails on bad root" do
+      assert_raise(
+        ArgumentError,
+        fn -> RomanChord.new(
+          root: 0,
+          inversion: -1,
+          scale: Scale.c_major_scale()
+        ) end
       )
     end
   end

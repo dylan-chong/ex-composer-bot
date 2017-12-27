@@ -41,9 +41,13 @@ defmodule ComposerBot.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
+      # Projects dependencies
       {:credo, "~> 0.8.8", only: [:dev, :test]},
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
       {:excoveralls, "~> 0.7", only: :test},
+
+      # Code dependencies
+      {:ex_structable, "~> 0.1.0"},
     ]
   end
 
