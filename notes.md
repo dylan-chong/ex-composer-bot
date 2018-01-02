@@ -2,11 +2,14 @@
 
 ## TODOs ##
 - Finish PartimentoChordsGenerator next_chord
-  - Requires representing chord as roman numeral - **TODO NEXT make Chord a protocol**
+  - Requires representing chord as roman numeral
+- Clear warnings
+- Make scale a struct (for future maintainability)
 - TODO AFTER Change all `%Module{}` into `Module.new()`
 
+- Make the non composing stuff its own library
+
 - Create pitches from string
-- Make scale a struct (for future maintainability)
 
 - PartimentoChordsGenerator
   - Rule of the octave
@@ -52,5 +55,3 @@
 ## Other Notes ##
 
 - Do chorales first
-
-- Make the non composing stuff its own library

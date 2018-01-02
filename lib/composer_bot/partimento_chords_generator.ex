@@ -3,7 +3,7 @@ defmodule ComposerBot.PartimentoChordsGenerator do
   Generates the chords and basic bassline for a Partimento.
   """
 
-  alias ComposerBot.{Scale, Note, Voice}
+  alias ComposerBot.{Scale, Note, Voice, Pitch}
 
   @spec generate_bass :: Voice.t
   def generate_bass do
@@ -12,13 +12,14 @@ defmodule ComposerBot.PartimentoChordsGenerator do
     %Voice{notes: generate_bass([first_note], scale, 7)}
   end
 
+  @spec generate_bass(list(Note.t), Scale.t, non_neg_integer) :: list(Note.t)
   defp generate_bass(notes, _scale, 0), do: notes
 
   # scale - An ascending list of pitches of a diatonic scale
   # notes_left - Number of notes to add
   defp generate_bass(notes = [last_note | _], scale, notes_left) do
     new_pitch = scale |> Scale.degree_above(last_note.pitch)
-    new_note = %{last_note | pitch: new_pitch}
+    new_note = %Note{last_note | pitch: new_pitch}
 
     [new_note | notes]
     |> generate_bass(scale, notes_left - 1)

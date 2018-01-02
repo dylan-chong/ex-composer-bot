@@ -24,7 +24,7 @@ defmodule ComposerBot.Scale do
 
   @spec c_major_scale() :: t
   def c_major_scale do
-    Scale.major_scale(%Pitch{note_num: 0})
+    major_scale(%Pitch{note_num: 0})
   end
 
   @spec degree_above(t, Pitch.t) :: Pitch.t

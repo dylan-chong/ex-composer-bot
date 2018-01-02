@@ -8,7 +8,6 @@ defmodule ComposerBot.RuleOfTheOctave do
 
   def next_chord(chord_note_pairs, next_bass = %Pitch{}, scale)
   when is_list(chord_note_pairs) and is_list(scale) do
-      c = 3
     current_bass =
       chord_note_pairs
       |> List.first

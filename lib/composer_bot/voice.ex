@@ -9,7 +9,7 @@ defmodule ComposerBot.Voice do
   @doc """
   * :notes - A list of `Note`, starting with the last note (reverse order)
   """
-  @type t :: %Voice{notes: list(ComposerBot.Note.t)}
+  @type t :: %Voice{notes: list(Note.t)}
   @enforce_keys [:notes]
   defstruct [:notes]
 

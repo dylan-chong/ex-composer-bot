@@ -1,6 +1,6 @@
 defmodule ComposerBotTest.RomanChordTest do
   use ExUnit.Case
-  alias ComposerBot.{RomanChord, Pitch, Scale, Chord}
+  alias ComposerBot.{Pitch, Scale, Chord, Chord.RomanChord}
   doctest RomanChord, import: true
 
   describe "new" do
@@ -13,14 +13,14 @@ defmodule ComposerBotTest.RomanChordTest do
     end
 
     test "successfully creates" do
-      RomanChord.new(success_args)
+      RomanChord.new(success_args())
     end
 
     def new_fails_validation(args) do
       assert_raise(
         ArgumentError,
         fn ->
-          success_args
+          success_args()
           |> Keyword.merge(args)
           |> RomanChord.new()
         end
