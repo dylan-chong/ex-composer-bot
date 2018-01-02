@@ -47,7 +47,7 @@ defmodule ComposerBot.Mixfile do
       {:excoveralls, "~> 0.7", only: :test},
 
       # Code dependencies
-      {:ex_structable, "~> 0.1.0"},
+      {:ex_structable, "~> 0.3.0"},
     ]
   end
 

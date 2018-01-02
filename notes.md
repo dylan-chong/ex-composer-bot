@@ -3,6 +3,8 @@
 ## TODOs ##
 - Finish PartimentoChordsGenerator next_chord
   - Requires representing chord as roman numeral - **TODO NEXT make Chord a protocol**
+- TODO AFTER Change all `%Module{}` into `Module.new()`
+
 - Create pitches from string
 - Make scale a struct (for future maintainability)
 

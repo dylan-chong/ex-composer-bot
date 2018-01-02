@@ -24,6 +24,7 @@ defmodule ComposerBot.RomanChord do
 
   use ExStructable
 
+  @impl true
   def validate_struct(chord, _) do
     if not (
       is_integer(chord.root)

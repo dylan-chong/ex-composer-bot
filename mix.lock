@@ -1,7 +1,7 @@
 %{"bunt": {:hex, :bunt, "0.2.0", "951c6e801e8b1d2cbe58ebbd3e616a869061ddadcc4863d0a2182541acae9a38", [:mix], []},
   "certifi": {:hex, :certifi, "2.0.0", "a0c0e475107135f76b8c1d5bc7efb33cd3815cb3cf3dea7aefdd174dabead064", [:rebar3], []},
   "credo": {:hex, :credo, "0.8.8", "990e7844a8d06ebacd88744a55853a83b74270b8a8461c55a4d0334b8e1736c9", [:mix], [{:bunt, "~> 0.2.0", [hex: :bunt, optional: false]}]},
-  "ex_structable": {:hex, :ex_structable, "0.1.0", "967d26c886a9d917f120bf453d54ff14311036c6afd2c8cca7366636558127f9", [:mix], [{:exconstructor, "~> 1.1.0", [hex: :exconstructor, optional: false]}, {:rename, "~> 0.1", [hex: :rename, optional: false]}]},
+  "ex_structable": {:hex, :ex_structable, "0.3.0", "da6f40ff362285c236cc58abf87be3e88d9b12778593e5ba22b26161063780c8", [:mix], [{:exconstructor, "~> 1.1.0", [hex: :exconstructor, optional: false]}]},
   "exconstructor": {:hex, :exconstructor, "1.1.0", "272623a7b203cb2901c20cbb92c5c3ab103cc0087ff7c881979e046043346752", [:mix], []},
   "excoveralls": {:hex, :excoveralls, "0.7.5", "339e433e5d3bce09400dc8de7b9040741a409c93917849916c136a0f51fdc183", [:mix], [{:exjsx, ">= 3.0.0", [hex: :exjsx, optional: false]}, {:hackney, ">= 0.12.0", [hex: :hackney, optional: false]}]},
   "exjsx": {:hex, :exjsx, "4.0.0", "60548841e0212df401e38e63c0078ec57b33e7ea49b032c796ccad8cde794b5c", [:mix], [{:jsx, "~> 2.8.0", [hex: :jsx, optional: false]}]},
