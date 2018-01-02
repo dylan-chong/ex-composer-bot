@@ -13,9 +13,10 @@ defmodule ComposerBot.RomanChord do
   * :root - Root degree. A number starting from 0.
   * :inversion - Root position is 0. 1st inversion is 1.
   * :scale - The ComposerBot.Scale that this chord is part of.
+
   TODO Find a way to represent seventh chords, also suspensions
   """
-  @enforce_keys [:root]
+  @enforce_keys [:root, :scale]
   defstruct [
     :root,
     :scale,
@@ -26,11 +27,9 @@ defmodule ComposerBot.RomanChord do
 
   @impl true
   def validate_struct(chord, _) do
-    if not (
-      is_integer(chord.root)
-      and chord.root in 0..length(chord.scale)
-      and is_integer(chord.inversion)
-      and chord.inversion in 0..2 # TODO Don't hardcode three for seventh chords
+    unless (
+      chord.root in 0..(length(chord.scale) - 1)
+      and chord.inversion in 0..2
       and is_list(chord.scale)
     ) do
       raise ArgumentError, "Invalid chord, #{inspect(chord)}"
