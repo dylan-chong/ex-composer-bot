@@ -1,15 +1,14 @@
 defmodule ComposerBot.FileExport do
   @moduledoc "Exports voices to LilyPond format."
 
-  alias ComposerBot.{FileExport, Voice}
+  alias ComposerBot.{Voice}
 
   @spec to_lily_string(list(Voice.t)) :: String.t
-
-  def to_lily_string(voices = []) do
+  def to_lily_string(_voices = []) do
     into_lily_file_string("")
   end
 
-  def to_lily_string(voices = [top, bottom]) do
+  def to_lily_string([top = %Voice{}, bottom = %Voice{}]) do
     """
     \\new Staff <<
       \\key c \\major
@@ -26,7 +25,8 @@ defmodule ComposerBot.FileExport do
     |> into_lily_file_string()
   end
 
-  defp into_lily_file_string(voices_string) do
+  defp into_lily_file_string(voices_string)
+      when is_bitstring(voices_string) do
     """
     \\score {
 

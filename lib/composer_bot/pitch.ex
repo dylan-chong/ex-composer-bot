@@ -33,14 +33,14 @@ defmodule ComposerBot.Pitch do
 
   """
   @spec to_lily_string(t) :: String.t
-  def to_lily_string(pitch) do
-    octaves = if pitch.octave == @lily_default_octave do
+  def to_lily_string(pitch = %Pitch{octave: octave}) do
+    octaves = if octave == @lily_default_octave do
       ""
     else
-      char = if pitch.octave < @lily_default_octave, do: ',', else: '\''
+      char = if octave < @lily_default_octave, do: ',', else: '\''
       fn -> char end
       |> Stream.repeatedly()
-      |> Enum.take(abs(pitch.octave - @lily_default_octave))
+      |> Enum.take(abs(octave - @lily_default_octave))
       |> to_string()
     end
 
@@ -109,9 +109,9 @@ defmodule ComposerBot.Pitch do
     [0, 2, 4, 5, 7, 9, 11]
   end
 
-  def equals_ignore_octave(pitch_a, pitch_b) do
+  def equals_ignore_octave(pitch_a = %Pitch{}, pitch_b = %Pitch{}) do
     pitch_a.note_num == pitch_b.note_num &&
-    pitch_a.alteration == pitch_b.alteration
+        pitch_a.alteration == pitch_b.alteration
   end
 
 end

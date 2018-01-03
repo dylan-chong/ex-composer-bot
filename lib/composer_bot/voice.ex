@@ -23,7 +23,7 @@ defmodule ComposerBot.Voice do
   end
 
   @spec into_voice_string(String.t) :: String.t
-  def into_voice_string(notes_string) do
+  def into_voice_string(notes_string) when is_bitstring(notes_string) do
     """
     \\absolute \\new Voice {
       #{notes_string}

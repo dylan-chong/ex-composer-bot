@@ -16,10 +16,12 @@ defmodule ComposerBot.Note do
   properties (`pitch`, `tied`, or another `note_above`), although the lengths
   of all notes above ignored.
   """
-  @type t :: %Note{pitch: Pitch.t | nil,
-                   length: integer,
-                   tied: boolean,
-                   note_above: Note.t}
+  @type t :: %Note{
+    pitch: Pitch.t | nil,
+    length: integer,
+    tied: boolean,
+    note_above: Note.t
+  }
   @enforce_keys [:pitch]
   defstruct [:pitch, length: 4, tied: false, note_above: nil]
 
@@ -31,8 +33,7 @@ defmodule ComposerBot.Note do
     "r#{length}"
   end
 
-  def to_lily_string(note = %Note{length: length,
-                                  note_above: nil}) do
+  def to_lily_string(note = %Note{length: length, note_above: nil}) do
     "#{to_string_with_tie(note)}#{length}"
   end
 
