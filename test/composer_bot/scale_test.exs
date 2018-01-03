@@ -7,26 +7,30 @@ defmodule ComposerBotTest.Scale do
   describe "major_scale starting on" do
     test "c" do
       s = Scale.c_major_scale()
-      assert s == [%Pitch{note_num: 0},
-                   %Pitch{note_num: 2},
-                   %Pitch{note_num: 4},
-                   %Pitch{note_num: 5},
-                   %Pitch{note_num: 7},
-                   %Pitch{note_num: 9},
-                   %Pitch{note_num: 11}]
+      assert s.pitches == [
+        %Pitch{note_num: 0},
+        %Pitch{note_num: 2},
+        %Pitch{note_num: 4},
+        %Pitch{note_num: 5},
+        %Pitch{note_num: 7},
+        %Pitch{note_num: 9},
+        %Pitch{note_num: 11}
+      ]
     end
 
-    # TODO Different scales not implemented yet
-    # test "g major" do
-      # s = Scale.c_major_scale()
-      # assert s == [%Pitch{note_num: 7},
-                   # %Pitch{note_num: 9},
-                   # %Pitch{note_num: 11},
-                   # %Pitch{note_num: 0},
-                   # %Pitch{note_num: 2},
-                   # %Pitch{note_num: 4},
-                   # %Pitch{note_num: 6, alteration: 1}]
-    # end
+    @tag :todo # TODO Different scales not implemented yet
+    test "g major" do
+      s = Scale.major_scale(%Pitch{note_num: 7})
+      assert s.pitches == [
+        %Pitch{note_num: 7},
+        %Pitch{note_num: 9},
+        %Pitch{note_num: 11},
+        %Pitch{note_num: 0},
+        %Pitch{note_num: 2},
+        %Pitch{note_num: 4},
+        %Pitch{note_num: 6, alteration: 1}
+      ]
+    end
   end
 
   describe "degree_above" do
@@ -86,32 +90,32 @@ defmodule ComposerBotTest.Scale do
     test "c to c on same octave" do
       assert 0 == Scale.steps_between(
         Scale.c_major_scale(),
-        Scale.c_major_scale() |> Enum.at(0),
-        Scale.c_major_scale() |> Enum.at(0)
+        Scale.c_major_scale() |> Scale.at(0),
+        Scale.c_major_scale() |> Scale.at(0)
       )
     end
 
     test "c to e" do
       assert 2 == Scale.steps_between(
         Scale.c_major_scale(),
-        Scale.c_major_scale() |> Enum.at(0),
-        Scale.c_major_scale() |> Enum.at(2)
+        Scale.c_major_scale() |> Scale.at(0),
+        Scale.c_major_scale() |> Scale.at(2)
       )
     end
 
     test "b down to g" do
       assert -2 == Scale.steps_between(
         Scale.c_major_scale(),
-        Scale.c_major_scale() |> Enum.at(6),
-        Scale.c_major_scale() |> Enum.at(4)
+        Scale.c_major_scale() |> Scale.at(6),
+        Scale.c_major_scale() |> Scale.at(4)
       )
     end
 
     test "c up to b" do
       assert 6 == Scale.steps_between(
         Scale.c_major_scale(),
-        Scale.c_major_scale() |> Enum.at(0),
-        Scale.c_major_scale() |> Enum.at(6)
+        Scale.c_major_scale() |> Scale.at(0),
+        Scale.c_major_scale() |> Scale.at(6)
       )
     end
 

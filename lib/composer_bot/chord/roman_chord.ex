@@ -1,7 +1,7 @@
 defmodule ComposerBot.Chord.RomanChord do
   @moduledoc ""
 
-  alias ComposerBot.{Chord, Pitch, Scale}
+  alias ComposerBot.{Chord.RomanChord, Scale}
 
   @doc """
   * :root - Root degree. A number starting from 0.
@@ -20,11 +20,10 @@ defmodule ComposerBot.Chord.RomanChord do
   use ExStructable
 
   @impl true
-  def validate_struct(chord, _) do
+  def validate_struct(chord = %RomanChord{scale: %Scale{}}, _) do
     unless (
-      chord.root in 0..(length(chord.scale) - 1)
+      chord.root in 0..(Scale.size(chord.scale) - 1)
       and chord.inversion in 0..2
-      and is_list(chord.scale)
     ) do
       raise ArgumentError, "Invalid chord, #{inspect(chord)}"
     end
@@ -35,7 +34,7 @@ defmodule ComposerBot.Chord.RomanChord do
 end
 
 defimpl ComposerBot.Chord, for: ComposerBot.Chord.RomanChord do
-  def pitches(chord) do
+  def pitches(_chord) do
     # TODO
   end
 end

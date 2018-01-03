@@ -12,7 +12,7 @@ defmodule ComposerBotTest.RuleOfTheOctave do
 #       b = %Pitch{note_num: 11}
 #       chord_vii6 = %Chord{root_pitch: b, inversion: 1}
 #       d = %Pitch{note_num: 2}
-#       pairs = [[note: c, chord: chord_I]]
+#       pairs = [{c, chord_I}]
 #       next_chord = RuleOfTheOctave.next_chord(pairs, d, c_major)
 
 #       assert next_chord == chord_vii6

@@ -1,8 +1,9 @@
 # Composition bot #
 
 ## TODOs ##
-- Clear warnings
 - Make scale a struct (for future maintainability)
+- Make major_scale(...) scale(:major, ...)
+- Lists.index_in(index, list) -> bool
 - TODO AFTER Change all `%Module{}` into `Module.new()`
 
 - Make the non composing stuff its own library

@@ -1,12 +1,28 @@
 defmodule ComposerBot.Scale do
   @moduledoc """
-  Methods to generate lists of `Pitch` structs.
-  A scale type ignores octaves
+  A scale is a list of pitches in ascending order. All pitches are unique
+  (ignoring octave).
+
+  This module also has methods to generate scales.
   """
 
   alias ComposerBot.{Scale, Pitch}
 
-  @type t :: list(Pitch.t)
+  @enforce_keys [:pitches]
+  defstruct [:pitches]
+  @type t :: %Scale{pitches: list(Pitch.t)}
+
+  use ExStructable
+
+  @impl true
+  def validate_struct(scale, _) do
+    unless is_list(scale.pitches) do
+      raise ArgumentError, "Invalid scale: #{scale}"
+    end
+    scale
+
+    # TODO validate pitches (to meet moduledoc specifications)
+  end
 
   @doc """
   Returns a list of `Pitch` structs in ascending order
@@ -18,8 +34,10 @@ defmodule ComposerBot.Scale do
       raise "NYI"
     end
 
-    Pitch.c_major_note_nums()
-    |> Enum.map(fn num -> %Pitch{note_num: num} end)
+    new(pitches: Enum.map(
+      Pitch.c_major_note_nums(),
+      fn num -> %Pitch{note_num: num} end
+    ))
   end
 
   @spec c_major_scale() :: t
@@ -28,27 +46,27 @@ defmodule ComposerBot.Scale do
   end
 
   @spec degree_above(t, Pitch.t) :: Pitch.t
-  def degree_above(scale, current_pitch) do
+  def degree_above(scale = %Scale{}, current_pitch = %Pitch{}) do
     find_pitch(scale, current_pitch, 1)
   end
 
   @spec degree_below(t, Pitch.t) :: Pitch.t
-  def degree_below(scale, current_pitch) do
+  def degree_below(scale = %Scale{}, current_pitch = %Pitch{}) do
     find_pitch(scale, current_pitch, -1)
   end
 
   @doc """
   Gets the index of the pitch in the scale.
 
-  iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 0})
-  0
+    iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 0})
+    0
 
-  iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 5})
-  3
+    iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 5})
+    3
   """
   @spec degree_of(t, Pitch.t) :: Pitch.t
-  def degree_of(scale, pitch) do
-    Enum.find_index(scale, fn current_pitch ->
+  def degree_of(%Scale{pitches: pitches}, pitch = %Pitch{}) do
+    Enum.find_index(pitches, fn current_pitch ->
       Pitch.equals_ignore_octave(pitch, current_pitch)
     end) || raise(
       ArgumentError,
@@ -56,10 +74,19 @@ defmodule ComposerBot.Scale do
     )
   end
 
-  def steps_between(scale, startp = %Pitch{}, endp = %Pitch{}) do
+  def at(%Scale{pitches: pitches}, index)
+      when index in 0..(length(pitches) - 1) do
+    Enum.at(pitches, index)
+  end
+
+  def size(%Scale{pitches: pitches}) do
+    length(pitches)
+  end
+
+  def steps_between(scale = %Scale{}, startp = %Pitch{}, endp = %Pitch{}) do
     octave_diff = endp.octave - startp.octave
     if octave_diff != 0 do
-      octave_diff * length(scale) + steps_between(
+      octave_diff * size(scale) + steps_between(
         scale,
         %Pitch{startp | octave: startp.octave + octave_diff},
         endp
@@ -69,24 +96,25 @@ defmodule ComposerBot.Scale do
     end
   end
 
-  defp find_pitch(scale, current_pitch, index_difference)
-      when abs(index_difference) >= 8 do
-    raise ArgumentError, "invalid index_difference: #{index_difference}"
+  defp find_pitch(_scale = %Scale{}, _current_pitch = %Pitch{}, index_diff)
+      when is_integer(index_diff) and abs(index_diff) >= 8 do
+    raise ArgumentError, "invalid index_diff: #{index_diff}"
   end
 
-  # index_difference: 1 to go up, -1 to go down
-  defp find_pitch(scale, current_pitch, index_difference) do
+  # index_diff: 1 to go up, -1 to go down
+  defp find_pitch(scale = %Scale{}, current_pitch = %Pitch{}, index_diff)
+      when is_integer(index_diff) do
     last_pitch_index = degree_of(scale, current_pitch)
 
-    new_pitch_index = last_pitch_index + index_difference
+    new_pitch_index = last_pitch_index + index_diff
     new_pitch_octave = current_pitch.octave + cond do
       new_pitch_index < 0 -> -1
-      new_pitch_index >= Enum.count(scale) -> 1
+      new_pitch_index >= Enum.count(scale.pitches) -> 1
       true -> 0
     end
-    new_pitch_index = rem(new_pitch_index, Enum.count(scale))
+    new_pitch_index = rem(new_pitch_index, size(scale))
 
-    %{Enum.at(scale, new_pitch_index) | octave: new_pitch_octave}
+    %{Enum.at(scale.pitches, new_pitch_index) | octave: new_pitch_octave}
   end
 
 end
