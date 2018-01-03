@@ -44,23 +44,23 @@ defmodule ComposerBot.Pitch do
       |> to_string()
     end
 
-    "#{get_letter(pitch)}#{alteration_to_string(pitch)}#{octaves}"
+    "#{letter(pitch)}#{alteration_to_string(pitch)}#{octaves}"
   end
 
   @doc """
   ## Examples
 
-    iex> Pitch.get_letter(%Pitch{note_num: 0})
+    iex> Pitch.letter(%Pitch{note_num: 0})
     'c'
 
-    iex> Pitch.get_letter(%Pitch{note_num: 6, alteration: -1})
+    iex> Pitch.letter(%Pitch{note_num: 6, alteration: -1})
     'g'
 
   """
-  @spec get_letter(t) :: charlist
-  def get_letter(%Pitch{note_num: note_num, alteration: alteration}) do
+  @spec letter(t) :: charlist
+  def letter(%Pitch{note_num: note_num, alteration: alteration}) do
     # Add 12 to account for the possibility of negative numbers
-    get_letter(rem(note_num - alteration + 12, 12))
+    letter(rem(note_num - alteration + 12, 12))
   end
 
   @doc """
@@ -70,8 +70,8 @@ defmodule ComposerBot.Pitch do
   because this method only accepts natural notes. The note_num of `dis` will
   cause an error to be thrown, and the note_num of `cisis` will return `'d'`).
   """
-  @spec get_letter(integer) :: charlist
-  def get_letter(note_num) when is_number(note_num) do
+  @spec letter(integer) :: charlist
+  def letter(note_num) when is_integer(note_num) do
     case note_num do
       0 -> 'c'
       2 -> 'd'

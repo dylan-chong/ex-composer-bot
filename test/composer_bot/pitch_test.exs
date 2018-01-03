@@ -43,45 +43,45 @@ defmodule ComposerBotTest.Pitch do
     end
   end
 
-  describe "get_letter returns base letter for pitch" do
+  describe "letter returns base letter for pitch" do
     test "c" do
       p = %Pitch{note_num: 0}
-      assert Pitch.get_letter(p) == 'c'
+      assert Pitch.letter(p) == 'c'
     end
 
     test "b" do
       p = %Pitch{note_num: 11}
-      assert Pitch.get_letter(p) == 'b'
+      assert Pitch.letter(p) == 'b'
     end
 
     test "cis" do
       p = %Pitch{note_num: 1, alteration: 1}
-      assert Pitch.get_letter(p) == 'c'
+      assert Pitch.letter(p) == 'c'
     end
 
     test "bis (returns b, not c)" do
       p = %Pitch{note_num: 0, alteration: 1}
-      assert Pitch.get_letter(p) == 'b'
+      assert Pitch.letter(p) == 'b'
     end
 
     test "fis" do
       p = %Pitch{note_num: 6, alteration: 1}
-      assert Pitch.get_letter(p) == 'f'
+      assert Pitch.letter(p) == 'f'
     end
 
     test "ges" do
       p = %Pitch{note_num: 6, alteration: -1}
-      assert Pitch.get_letter(p) == 'g'
+      assert Pitch.letter(p) == 'g'
     end
 
     test "cisis returns g" do
       p = %Pitch{note_num: 2, alteration: 2}
-      assert Pitch.get_letter(p) == 'c'
+      assert Pitch.letter(p) == 'c'
     end
 
     test "beses returns b" do
       p = %Pitch{note_num: 9, alteration: -2}
-      assert Pitch.get_letter(p) == 'b'
+      assert Pitch.letter(p) == 'b'
     end
   end
 
