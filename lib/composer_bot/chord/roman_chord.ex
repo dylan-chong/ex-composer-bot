@@ -1,7 +1,5 @@
 defmodule ComposerBot.Chord.RomanChord do
-  @moduledoc """
-  A chord
-  """
+  @moduledoc ""
 
   alias ComposerBot.{Chord, Pitch, Scale}
 
@@ -30,6 +28,7 @@ defmodule ComposerBot.Chord.RomanChord do
     ) do
       raise ArgumentError, "Invalid chord, #{inspect(chord)}"
     end
+    # TODO accept root as pitch
     chord
   end
 

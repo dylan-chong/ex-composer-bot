@@ -1,8 +1,6 @@
 # Composition bot #
 
 ## TODOs ##
-- Finish PartimentoChordsGenerator next_chord
-  - Requires representing chord as roman numeral
 - Clear warnings
 - Make scale a struct (for future maintainability)
 - TODO AFTER Change all `%Module{}` into `Module.new()`
@@ -12,6 +10,8 @@
 - Create pitches from string
 
 - PartimentoChordsGenerator
+  - Finish PartimentoChordsGenerator next_chord
+    - requires TODO RomanChord impl
   - Rule of the octave
     - Then try randomised stepping bass notes
   - Look at schemas on openmusictheory
