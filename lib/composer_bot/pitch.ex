@@ -18,17 +18,18 @@ defmodule ComposerBot.Pitch do
   @type t :: %Pitch{number: integer, octave: integer, alteration: integer}
   @enforce_keys [:number]
   defstruct [:number, octave: @lily_default_octave, alteration: 0]
+  use ExStructable
 
   @doc """
   Exports this `Pitch` to a format that can be pasted into LilyPond
 
   ## Examples
 
-    iex> Pitch.to_lily_string(%Pitch{number: 7, octave: 4})
-    "g'"
+      iex> Pitch.to_lily_string(%Pitch{number: 7, octave: 4})
+      "g'"
 
-    iex> Pitch.to_lily_string(%Pitch{number: 8, alteration: 1})
-    "gis"
+      iex> Pitch.to_lily_string(%Pitch{number: 8, alteration: 1})
+      "gis"
 
   """
   @spec to_lily_string(t) :: String.t
@@ -49,11 +50,11 @@ defmodule ComposerBot.Pitch do
   @doc """
   ## Examples
 
-    iex> Pitch.letter(%Pitch{number: 0})
-    'c'
+      iex> Pitch.letter(%Pitch{number: 0})
+      'c'
 
-    iex> Pitch.letter(%Pitch{number: 6, alteration: -1})
-    'g'
+      iex> Pitch.letter(%Pitch{number: 6, alteration: -1})
+      'g'
 
   """
   @spec letter(t) :: charlist

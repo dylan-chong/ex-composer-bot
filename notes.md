@@ -1,7 +1,6 @@
 # Composition bot #
 
 ## TODOs ##
-- Rename note numb to something else
 - TODO AFTER Change all `%Module{}` into `Module.new()`
 
 - Make the non composing stuff its own library

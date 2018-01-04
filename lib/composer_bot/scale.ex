@@ -15,10 +15,7 @@ defmodule ComposerBot.Scale do
   use ExStructable
 
   @impl true
-  def validate_struct(scale, _) do
-    unless is_list(scale.pitches) do
-      raise ArgumentError, "Invalid scale: #{scale}"
-    end
+  def validate_struct(scale = %Scale{pitches: [%Pitch{} | _]}, _) do
     scale
 
     # TODO validate pitches (to meet moduledoc specifications)
