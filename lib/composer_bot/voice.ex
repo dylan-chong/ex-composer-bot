@@ -14,6 +14,13 @@ defmodule ComposerBot.Voice do
   defstruct [:notes]
   use ExStructable
 
+  @impl true
+  def validate_struct(voice = %Voice{notes: notes}, _) do
+    Enum.all?(notes, &(match?(%Note{}, &1)))
+      || raise "Invalid voice #{inspect(voice)}"
+    voice
+  end
+
   @spec to_lily_string(Voice.t) :: String.t
   def to_lily_string(%Voice{notes: notes}) do
     notes

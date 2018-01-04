@@ -12,13 +12,26 @@ defmodule ComposerBot.Pitch do
   * :number - The pitch number of the semitone where 0 is 'C' and 11 is 'B'.
   This includes the alteration, so 1 will be c# or db.
   * :octave - Middle C, and all notes up to (and including) the next B, has
-  number 4
-  * :alteration - The accidental - 0 for natural, -1 for flat, and 1 for sharp
+  number 4.
+  * :alteration - The accidental: 0 for natural, 1 for sharp, 2 for double
+  sharp. Use negative numbers for flats.
   """
   @type t :: %Pitch{number: integer, octave: integer, alteration: integer}
   @enforce_keys [:number]
   defstruct [:number, octave: @lily_default_octave, alteration: 0]
   use ExStructable
+
+  @impl true
+  def validate_struct(pitch, _) do
+    unless (
+      pitch.number in 0..11
+      and is_integer(pitch.octave)
+      and pitch.alteration in -2..2
+    ) do
+      raise ArgumentError, "Invalid pitch: #{pitch}"
+    end
+    pitch
+  end
 
   @doc """
   Exports this `Pitch` to a format that can be pasted into LilyPond

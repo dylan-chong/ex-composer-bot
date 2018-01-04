@@ -4,6 +4,30 @@ defmodule ComposerBotTest.Scale do
   alias ComposerBot.{Scale, Pitch}
   doctest Scale, import: true
 
+  describe "validate_struct fails" do
+    test "when non-pitch is passed" do
+      assert_raise(
+        ArgumentError,
+        ~r"Invalid scale.*",
+        fn -> Scale.new(pitches: [
+          Pitch.new(number: 0),
+          :not_a_pitch,
+        ]) end
+      )
+    end
+
+    test "when pitch with incorrect octave is passed" do
+      assert_raise(
+        ArgumentError,
+        ~r"Invalid scale.*",
+        fn -> Scale.new(pitches: [
+          Pitch.new(number: 0, octave: 1),
+          Pitch.new(number: 0, octave: 2),
+        ]) end
+      )
+    end
+  end
+
   describe "major_scale starting on" do
     test "c" do
       s = Scale.c_major()

@@ -38,7 +38,7 @@ defmodule ComposerBotTest.Note do
     end
 
     test "rest" do
-      n = Note.new(pitch: nil)
+      n = Note.new(pitch: :is_rest)
       assert Note.to_lily_string(n) == "r4"
     end
 

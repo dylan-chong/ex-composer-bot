@@ -14,10 +14,19 @@ defmodule ComposerBot.Scale do
   use ExStructable
 
   @impl true
-  def validate_struct(scale = %Scale{pitches: [%Pitch{} | _]}, _) do
-    scale
+  def validate_struct(
+    scale = %Scale{pitches: pitches = [%Pitch{octave: octave} | _]},
+    _
+  ) do
+    Enum.each(pitches, fn
+      %Pitch{octave: ^octave} ->
+        :ok
+      invalid_item ->
+        raise ArgumentError, "Invalid scale #{inspect(scale)} "
+          <> "pitch is invalid #{inspect(invalid_item)}"
+    end)
 
-    # TODO validate pitches (to meet moduledoc specifications)
+    scale
   end
 
   @doc """
