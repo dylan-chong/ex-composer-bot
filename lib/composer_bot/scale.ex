@@ -27,22 +27,22 @@ defmodule ComposerBot.Scale do
   @doc """
   Returns a list of `Pitch` structs in ascending order
   """
-  @spec major_scale(Pitch.t) :: t
-  def major_scale(%Pitch{note_num: base_note_num, alteration: base_alt}) do
-    if base_note_num != 0 || base_alt != 0 do
+  @spec type(:major, Pitch.t) :: t
+  def type(:major, %Pitch{number: base_number, alteration: base_alt}) do
+    if base_number != 0 || base_alt != 0 do
       # TODO SOMETIME transpose into other keys
       raise "NYI"
     end
 
     new(pitches: Enum.map(
-      Pitch.c_major_note_nums(),
-      fn num -> %Pitch{note_num: num} end
+      Pitch.c_major_numbers(),
+      fn num -> %Pitch{number: num} end
     ))
   end
 
-  @spec c_major_scale() :: t
-  def c_major_scale do
-    major_scale(%Pitch{note_num: 0})
+  @spec c_major() :: t
+  def c_major do
+    type(:major, %Pitch{number: 0})
   end
 
   @spec degree_above(t, Pitch.t) :: Pitch.t
@@ -58,10 +58,10 @@ defmodule ComposerBot.Scale do
   @doc """
   Gets the index of the pitch in the scale.
 
-    iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 0})
+    iex> Scale.degree_of(Scale.c_major(), %Pitch{number: 0})
     0
 
-    iex> Scale.degree_of(Scale.c_major_scale(), %Pitch{note_num: 5})
+    iex> Scale.degree_of(Scale.c_major(), %Pitch{number: 5})
     3
   """
   @spec degree_of(t, Pitch.t) :: Pitch.t
@@ -75,7 +75,7 @@ defmodule ComposerBot.Scale do
   end
 
   def at(%Scale{pitches: pitches}, index)
-      when index in 0..(length(pitches) - 1) do
+      when index in 0..length(pitches) - 1 do
     Enum.at(pitches, index)
   end
 

@@ -9,7 +9,7 @@ defmodule ComposerBotTest.Voice do
 
     test "for one note" do
       v = %Voice{notes: [
-        %Note{pitch: %Pitch{note_num: 0}}
+        %Note{pitch: %Pitch{number: 0}}
       ]}
       assert Voice.to_lily_string(v) == """
       \\absolute \\new Voice {
@@ -21,8 +21,8 @@ defmodule ComposerBotTest.Voice do
     test "for two notes" do
       # Notes are in reverse order
       v = %Voice{notes: [
-        %Note{pitch: %Pitch{note_num: 1, alteration: 1}},
-        %Note{pitch: %Pitch{note_num: 0}}
+        %Note{pitch: %Pitch{number: 1, alteration: 1}},
+        %Note{pitch: %Pitch{number: 0}}
       ]}
       # Assume Voice.into_voice_string works properly if the "for one note"
       # test passes

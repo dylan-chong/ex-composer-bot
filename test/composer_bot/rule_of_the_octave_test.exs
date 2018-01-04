@@ -5,13 +5,13 @@ defmodule ComposerBotTest.RuleOfTheOctave do
   describe "next_chord for the bass ascending from" do
     @tag :todo
     test "c to d" do
-#       c_major = Scale.c_major_scale()
-#       c = %Pitch{note_num: 0}
+#       c_major = Scale.c_major()
+#       c = %Pitch{number: 0}
 #       chord_I = %Chord{root_pitch: c}
 
-#       b = %Pitch{note_num: 11}
+#       b = %Pitch{number: 11}
 #       chord_vii6 = %Chord{root_pitch: b, inversion: 1}
-#       d = %Pitch{note_num: 2}
+#       d = %Pitch{number: 2}
 #       pairs = [{c, chord_I}]
 #       next_chord = RuleOfTheOctave.next_chord(pairs, d, c_major)
 

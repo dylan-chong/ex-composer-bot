@@ -8,7 +8,7 @@ defmodule ComposerBotTest.RomanChordTest do
       [
         root: 0,
         inversion: 0,
-        scale: Scale.c_major_scale()
+        scale: Scale.c_major()
       ]
     end
 

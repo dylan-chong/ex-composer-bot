@@ -1,8 +1,7 @@
 # Composition bot #
 
 ## TODOs ##
-- **TODO NEXT** Make major_scale(...) scale(:major, ...)
-- Lists.index_in(index, list) -> bool
+- Rename note numb to something else
 - TODO AFTER Change all `%Module{}` into `Module.new()`
 
 - Make the non composing stuff its own library
