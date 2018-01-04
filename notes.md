@@ -1,8 +1,7 @@
 # Composition bot #
 
 ## TODOs ##
-- TODO AFTER Change all `%Module{}` into `Module.new()`
-  - then type check
+- type check validate_struct
 
 - Make the non composing stuff its own library
 
