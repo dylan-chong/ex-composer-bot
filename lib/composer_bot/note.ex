@@ -24,6 +24,7 @@ defmodule ComposerBot.Note do
   }
   @enforce_keys [:pitch]
   defstruct [:pitch, length: 4, tied: false, note_above: nil]
+  use ExStructable
 
   @doc """
   Exports this `Note` to a format that can be pasted into LilyPond

@@ -2,6 +2,7 @@
 
 ## TODOs ##
 - TODO AFTER Change all `%Module{}` into `Module.new()`
+  - then type check
 
 - Make the non composing stuff its own library
 
@@ -52,4 +53,7 @@
 
 ## Other Notes ##
 
-- Do chorales first
+- Types of piecs to make
+  - Do chorales first
+  - Mozart minuets
+

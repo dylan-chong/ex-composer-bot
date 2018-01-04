@@ -12,6 +12,7 @@ defmodule ComposerBot.Voice do
   @type t :: %Voice{notes: list(Note.t)}
   @enforce_keys [:notes]
   defstruct [:notes]
+  use ExStructable
 
   @spec to_lily_string(Voice.t) :: String.t
   def to_lily_string(%Voice{notes: notes}) do

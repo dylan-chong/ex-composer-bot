@@ -8,10 +8,9 @@ defmodule ComposerBot.Scale do
 
   alias ComposerBot.{Scale, Pitch}
 
+  @type t :: %Scale{pitches: list(Pitch.t)}
   @enforce_keys [:pitches]
   defstruct [:pitches]
-  @type t :: %Scale{pitches: list(Pitch.t)}
-
   use ExStructable
 
   @impl true
