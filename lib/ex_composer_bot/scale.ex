@@ -41,13 +41,13 @@ defmodule ExComposerBot.Scale do
 
     new(pitches: Enum.map(
       Pitch.c_major_numbers(),
-      fn num -> %Pitch{number: num} end
+      fn num -> Pitch.new(number: num) end
     ))
   end
 
   @spec c_major() :: t
   def c_major do
-    type(:major, %Pitch{number: 0})
+    type(:major, Pitch.new(number: 0))
   end
 
   @spec degree_above(t, Pitch.t) :: Pitch.t
@@ -63,10 +63,10 @@ defmodule ExComposerBot.Scale do
   @doc """
   Gets the index of the pitch in the scale.
 
-    iex> Scale.degree_of(Scale.c_major(), %Pitch{number: 0})
+    iex> Scale.degree_of(Scale.c_major(), Pitch.new(number: 0))
     0
 
-    iex> Scale.degree_of(Scale.c_major(), %Pitch{number: 5})
+    iex> Scale.degree_of(Scale.c_major(), Pitch.new(number: 5))
     3
   """
   @spec degree_of(t, Pitch.t) :: non_neg_integer

@@ -1,7 +1,7 @@
 # Composition bot #
 
 ## TODOs ##
-- Music module
+- Music module for lilypond export
 - Create pitches from string
 
 - PartimentoChordsGenerator

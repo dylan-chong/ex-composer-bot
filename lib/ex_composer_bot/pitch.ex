@@ -38,10 +38,10 @@ defmodule ExComposerBot.Pitch do
 
   ## Examples
 
-      iex> Pitch.to_lily_string(%Pitch{number: 7, octave: 4})
+      iex> Pitch.to_lily_string(Pitch.new(number: 7, octave: 4))
       "g'"
 
-      iex> Pitch.to_lily_string(%Pitch{number: 8, alteration: 1})
+      iex> Pitch.to_lily_string(Pitch.new(number: 8, alteration: 1))
       "gis"
 
   """
@@ -63,10 +63,10 @@ defmodule ExComposerBot.Pitch do
   @doc """
   ## Examples
 
-      iex> Pitch.letter(%Pitch{number: 0})
+      iex> Pitch.letter(Pitch.new(number: 0))
       'c'
 
-      iex> Pitch.letter(%Pitch{number: 6, alteration: -1})
+      iex> Pitch.letter(Pitch.new(number: 6, alteration: -1))
       'g'
 
   """
