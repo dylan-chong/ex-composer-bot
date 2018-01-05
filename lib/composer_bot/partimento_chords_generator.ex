@@ -1,9 +1,9 @@
-defmodule ComposerBot.PartimentoChordsGenerator do
+defmodule ExComposerBot.PartimentoChordsGenerator do
   @moduledoc """
   Generates the chords and basic bassline for a Partimento.
   """
 
-  alias ComposerBot.{Scale, Note, Voice}
+  alias ExComposerBot.{Scale, Note, Voice}
 
   @spec generate_bass :: Voice.t
   def generate_bass do

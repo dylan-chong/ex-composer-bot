@@ -1,12 +1,12 @@
-defmodule ComposerBot.Chord.RomanChord do
+defmodule ExComposerBot.Chord.RomanChord do
   @moduledoc ""
 
-  alias ComposerBot.{Chord.RomanChord, Scale}
+  alias ExComposerBot.{Chord.RomanChord, Scale}
 
   @doc """
   * :root - Root degree. A number starting from 0.
   * :inversion - Root position is 0. 1st inversion is 1.
-  * :scale - The ComposerBot.Scale that this chord is part of.
+  * :scale - The ExComposerBot.Scale that this chord is part of.
 
   TODO Find a way to represent seventh chords, also suspensions
   """
@@ -33,7 +33,7 @@ defmodule ComposerBot.Chord.RomanChord do
 
 end
 
-defimpl ComposerBot.Chord, for: ComposerBot.Chord.RomanChord do
+defimpl ExComposerBot.Chord, for: ExComposerBot.Chord.RomanChord do
   def pitches(_chord) do
     # TODO
   end

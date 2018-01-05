@@ -1,7 +1,7 @@
-defmodule ComposerBotTest.Scale do
+defmodule ExComposerBotTest.Scale do
   @moduledoc false
   use ExUnit.Case, async: true
-  alias ComposerBot.{Scale, Pitch}
+  alias ExComposerBot.{Scale, Pitch}
   doctest Scale, import: true
 
   describe "validate_struct fails" do

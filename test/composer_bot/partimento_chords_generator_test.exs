@@ -1,5 +1,5 @@
-defmodule ComposerBotTest.PartimentoChordsGenerator do
+defmodule ExComposerBotTest.PartimentoChordsGenerator do
   @moduledoc false
   use ExUnit.Case
-#   alias ComposerBot.{PartimentoChordsGenerator, Scale, Pitch}
+#   alias ExComposerBot.{PartimentoChordsGenerator, Scale, Pitch}
 end

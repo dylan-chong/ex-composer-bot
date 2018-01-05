@@ -1,5 +1,5 @@
-defmodule ComposerBotTest do
+defmodule ExComposerBotTest do
   use ExUnit.Case
-  doctest ComposerBot
+  doctest ExComposerBot
 
 end

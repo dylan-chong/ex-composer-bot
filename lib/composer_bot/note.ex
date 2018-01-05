@@ -1,10 +1,10 @@
-defmodule ComposerBot.Note do
+defmodule ExComposerBot.Note do
   @moduledoc """
-  A wrapper around `ComposerBot.Pitch`. A note can be a rest, and must have a
+  A wrapper around `ExComposerBot.Pitch`. A note can be a rest, and must have a
   length.
   """
 
-  alias ComposerBot.{Note, Pitch}
+  alias ExComposerBot.{Note, Pitch}
 
   @doc """
   * :pitch - A `Pitch`. Should be `:is_rest` if this `Note` should be a rest

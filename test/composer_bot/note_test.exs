@@ -1,8 +1,8 @@
-defmodule ComposerBotTest.Note do
+defmodule ExComposerBotTest.Note do
   @moduledoc false
 
   use ExUnit.Case, async: true
-  alias ComposerBot.{Note, Pitch}
+  alias ExComposerBot.{Note, Pitch}
 
   describe "to_lily_string returns correct LilyPond for a" do
     # These tests assume `Pitch.to_lily_string` works correctly

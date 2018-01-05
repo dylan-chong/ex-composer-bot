@@ -1,9 +1,9 @@
-defmodule ComposerBot.Pitch do
+defmodule ExComposerBot.Pitch do
   @moduledoc """
   Represents a single pitch (no length, no rest).
   """
 
-  alias ComposerBot.Pitch, as: Pitch
+  alias ExComposerBot.Pitch, as: Pitch
 
   # LilyPond's default octave number"
   @lily_default_octave 3

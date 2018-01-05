@@ -1,10 +1,8 @@
 # Composition bot #
 
 ## TODOs ##
-- type check validate_struct
-
-- Make the non composing stuff its own library
-
+- Prefix with Ex
+- Music module
 - Create pitches from string
 
 - PartimentoChordsGenerator
@@ -17,6 +15,7 @@
 - Cadences
 - Rests
 - Remove parallels
+- Make the non composing stuff its own library
 
 ## Composition Process ##
 

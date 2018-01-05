@@ -1,4 +1,4 @@
-defmodule ComposerBot.Mixfile do
+defmodule ExComposerBot.Mixfile do
   use Mix.Project
 
   def project do
@@ -22,7 +22,7 @@ defmodule ComposerBot.Mixfile do
     # Specify extra applications you'll use from Erlang/Elixir
     [
       extra_applications: [:logger],
-      mod: {ComposerBot.Application, []}
+      mod: {ExComposerBot.Application, []}
     ]
   end
 

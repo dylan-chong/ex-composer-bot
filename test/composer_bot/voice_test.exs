@@ -1,8 +1,8 @@
-defmodule ComposerBotTest.Voice do
+defmodule ExComposerBotTest.Voice do
   @moduledoc false
 
   use ExUnit.Case, async: true
-  alias ComposerBot.{Voice, Note, Pitch}
+  alias ExComposerBot.{Voice, Note, Pitch}
 
   describe "sequence of notes outputs correct LilyPond format" do
     # Assumes that `Note.to_lily_string` works properly

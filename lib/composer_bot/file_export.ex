@@ -1,7 +1,7 @@
-defmodule ComposerBot.FileExport do
+defmodule ExComposerBot.FileExport do
   @moduledoc "Exports voices to LilyPond format."
 
-  alias ComposerBot.{Voice}
+  alias ExComposerBot.{Voice}
 
   @spec to_lily_string(list(Voice.t)) :: String.t
   def to_lily_string(_voices = []) do

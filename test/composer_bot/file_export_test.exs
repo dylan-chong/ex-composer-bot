@@ -1,6 +1,6 @@
-defmodule ComposerBotTest.FileExport do
+defmodule ExComposerBotTest.FileExport do
   use ExUnit.Case
-  alias ComposerBot.FileExport
+  alias ExComposerBot.FileExport
 
   describe "to_lily_string converts to LilyPond format for " do
     test "no voices" do
@@ -19,7 +19,7 @@ defmodule ComposerBotTest.FileExport do
 
     @tag :todo
     test "temp" do
-#       alias ComposerBot.{PartimentoChordsGenerator}
+#       alias ExComposerBot.{PartimentoChordsGenerator}
 #       bass = PartimentoChordsGenerator.generate_bass
 #       s = FileExport.to_lily_string [bass, bass]
 #       IO.puts "\n\n\n#{s}\n\n\n"

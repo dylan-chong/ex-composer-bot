@@ -1,8 +1,8 @@
-defmodule ComposerBotTest.Pitch do
+defmodule ExComposerBotTest.Pitch do
   @moduledoc false
 
   use ExUnit.Case, async: true
-  alias ComposerBot.Pitch, as: Pitch
+  alias ExComposerBot.Pitch, as: Pitch
 
   doctest Pitch, import: true
 

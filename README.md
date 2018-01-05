@@ -1,4 +1,4 @@
-# ComposerBot
+# ExComposerBot
 
 A program that will eventually generate music.
 

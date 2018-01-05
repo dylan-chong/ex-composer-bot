@@ -1,10 +1,10 @@
-defmodule ComposerBot.Voice do
+defmodule ExComposerBot.Voice do
   @moduledoc """
   Represents sequence of notes for a piece. Notes within this voice cannot
   overlap with each other.
   """
 
-  alias ComposerBot.{Voice, Note}
+  alias ExComposerBot.{Voice, Note}
 
   @doc """
   * :notes - A list of `Note`, starting with the last note (reverse order)
@@ -16,8 +16,9 @@ defmodule ComposerBot.Voice do
 
   @impl true
   def validate_struct(voice = %Voice{notes: notes}, _) do
-    Enum.all?(notes, &(match?(%Note{}, &1)))
-      || raise "Invalid voice #{inspect(voice)}"
+    unless Enum.all?(notes, &(match?(%Note{}, &1))) do
+      raise "Invalid voice #{inspect(voice)}"
+    end
     voice
   end
 

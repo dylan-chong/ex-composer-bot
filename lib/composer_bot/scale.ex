@@ -1,4 +1,4 @@
-defmodule ComposerBot.Scale do
+defmodule ExComposerBot.Scale do
   @moduledoc """
   A scale is a list of pitches in ascending order. All pitches are unique
   (ignoring octave).
@@ -6,7 +6,7 @@ defmodule ComposerBot.Scale do
   This module also has methods to generate scales.
   """
 
-  alias ComposerBot.{Scale, Pitch}
+  alias ExComposerBot.{Scale, Pitch}
 
   @type t :: %Scale{pitches: list(Pitch.t)}
   @enforce_keys [:pitches]

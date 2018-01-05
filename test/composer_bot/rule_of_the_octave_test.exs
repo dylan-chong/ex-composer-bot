@@ -1,6 +1,6 @@
-defmodule ComposerBotTest.RuleOfTheOctave do
+defmodule ExComposerBotTest.RuleOfTheOctave do
   use ExUnit.Case
-#   alias ComposerBot.{RuleOfTheOctave, Pitch, Scale, Chord}
+#   alias ExComposerBot.{RuleOfTheOctave, Pitch, Scale, Chord}
 
   describe "next_chord for the bass ascending from" do
     @tag :todo

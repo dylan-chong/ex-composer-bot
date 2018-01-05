@@ -1,10 +1,10 @@
-defmodule ComposerBot.RuleOfTheOctave do
+defmodule ExComposerBot.RuleOfTheOctave do
   @moduledoc """
   Follows the rules described here:
   http://faculty-web.at.northwestern.edu/music/gjerdingen/partimenti/aboutParti/ruleOfTheOctave.htm
   """
 
-  alias ComposerBot.{Pitch, Scale}
+  alias ExComposerBot.{Pitch, Scale}
 
   def next_chord(
     chord_note_pairs = [{

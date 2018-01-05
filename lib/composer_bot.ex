@@ -1,6 +1,6 @@
-defmodule ComposerBot do
+defmodule ExComposerBot do
   @moduledoc """
-  Documentation for ComposerBot.
+  Documentation for ExComposerBot.
   """
 
 end
