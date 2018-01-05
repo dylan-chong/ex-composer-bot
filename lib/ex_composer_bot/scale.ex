@@ -69,7 +69,7 @@ defmodule ExComposerBot.Scale do
     iex> Scale.degree_of(Scale.c_major(), %Pitch{number: 5})
     3
   """
-  @spec degree_of(t, Pitch.t) :: Pitch.t
+  @spec degree_of(t, Pitch.t) :: non_neg_integer
   def degree_of(%Scale{pitches: pitches}, pitch = %Pitch{}) do
     Enum.find_index(pitches, fn current_pitch ->
       Pitch.equals_ignore_octave(pitch, current_pitch)
@@ -93,7 +93,7 @@ defmodule ExComposerBot.Scale do
     if octave_diff != 0 do
       octave_diff * size(scale) + steps_between(
         scale,
-        %Pitch{startp | octave: startp.octave + octave_diff},
+        Pitch.put(startp, octave: startp.octave + octave_diff),
         endp
       )
     else
@@ -101,14 +101,9 @@ defmodule ExComposerBot.Scale do
     end
   end
 
-  defp find_pitch(_scale = %Scale{}, _current_pitch = %Pitch{}, index_diff)
-      when is_integer(index_diff) and abs(index_diff) >= 8 do
-    raise ArgumentError, "invalid index_diff: #{index_diff}"
-  end
-
   # index_diff: 1 to go up, -1 to go down
   defp find_pitch(scale = %Scale{}, current_pitch = %Pitch{}, index_diff)
-      when is_integer(index_diff) do
+      when is_integer(index_diff) and abs(index_diff) < 8 do
     last_pitch_index = degree_of(scale, current_pitch)
 
     new_pitch_index = last_pitch_index + index_diff
@@ -119,7 +114,9 @@ defmodule ExComposerBot.Scale do
     end
     new_pitch_index = rem(new_pitch_index, size(scale))
 
-    %{Enum.at(scale.pitches, new_pitch_index) | octave: new_pitch_octave}
+    scale.pitches
+    |> Enum.at(new_pitch_index)
+    |> Pitch.put(octave: new_pitch_octave)
   end
 
 end

@@ -1,7 +1,6 @@
 # Composition bot #
 
 ## TODOs ##
-- Prefix with Ex
 - Music module
 - Create pitches from string
 
