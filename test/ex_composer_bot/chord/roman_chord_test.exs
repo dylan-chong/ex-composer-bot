@@ -6,7 +6,7 @@ defmodule ExComposerBotTest.RomanChordTest do
   describe "new" do
     def success_args do
       [
-        root: 0,
+        root: 1,
         inversion: 0,
         scale: Scale.c_major()
       ]
@@ -32,11 +32,11 @@ defmodule ExComposerBotTest.RomanChordTest do
     end
 
     test "fails on too low root" do
-      new_fails_validation(FunctionClauseError, root: -1)
+      new_fails_validation(FunctionClauseError, root: 0)
     end
 
     test "fails on too high root" do
-      new_fails_validation(FunctionClauseError, root: 7)
+      new_fails_validation(FunctionClauseError, root: 8)
     end
   end
 

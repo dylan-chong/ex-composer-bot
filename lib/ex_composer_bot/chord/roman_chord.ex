@@ -32,6 +32,7 @@ defmodule ExComposerBot.Chord.RomanChord do
         end)
         root
       degree when is_integer(degree) ->
+        # Assume Scale.at throws on invalid degree
         Scale.at(scale, degree)
     end}
 
