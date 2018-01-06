@@ -197,4 +197,14 @@ defmodule ExComposerBotTest.Scale do
 
   end
 
+  describe "contains" do
+    test "returns true for pitch in the scale" do
+      assert Scale.contains(Scale.c_major(), Pitch.new(number: 0, octave: 99))
+    end
+
+    test "returns false for pitch in the scale" do
+      refute Scale.contains(Scale.c_major(), Pitch.new(number: 1, octave: 99))
+    end
+  end
+
 end

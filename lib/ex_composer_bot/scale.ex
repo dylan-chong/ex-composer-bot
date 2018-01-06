@@ -63,20 +63,34 @@ defmodule ExComposerBot.Scale do
   @doc """
   Gets the index of the pitch in the scale.
 
-    iex> Scale.degree_of(Scale.c_major(), Pitch.new(number: 0))
-    0
+      iex> Scale.degree_of(Scale.c_major(), Pitch.new(number: 0))
+      0
 
-    iex> Scale.degree_of(Scale.c_major(), Pitch.new(number: 5))
-    3
+      iex> Scale.degree_of(Scale.c_major(), Pitch.new(number: 5))
+      3
+
+      iex> Scale.degree_of(Scale.c_major(), Pitch.new(number: 11))
+      6
+
   """
   @spec degree_of(t, Pitch.t) :: non_neg_integer
-  def degree_of(%Scale{pitches: pitches}, pitch = %Pitch{}) do
+  def degree_of(
+    %Scale{pitches: pitches},
+    pitch = %Pitch{},
+    default_fun \\ fn pitch ->
+      raise(
+        ArgumentError,
+        "pitch (#{inspect(pitch)}) not in scale (#{inspect(pitch)})"
+      )
+    end
+  ) do
     Enum.find_index(pitches, fn current_pitch ->
       Pitch.equals_ignore_octave(pitch, current_pitch)
-    end) || raise(
-      ArgumentError,
-      "pitch (#{inspect(pitch)}) not in scale (#{inspect(pitch)})"
-    )
+    end) || default_fun.(pitch)
+  end
+
+  def contains(scale = %Scale{}, pitch = %Pitch{}) do
+    degree_of(scale, pitch, fn _ -> :not_found end) != :not_found
   end
 
   def at(%Scale{pitches: pitches}, index)

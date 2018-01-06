@@ -16,9 +16,9 @@ defmodule ExComposerBotTest.RomanChordTest do
       RomanChord.new(success_args())
     end
 
-    def new_fails_validation(args) do
+    def new_fails_validation(error \\ ArgumentError, args) do
       assert_raise(
-        ArgumentError,
+        error,
         fn ->
           success_args()
           |> Keyword.merge(args)
@@ -32,11 +32,11 @@ defmodule ExComposerBotTest.RomanChordTest do
     end
 
     test "fails on too low root" do
-      new_fails_validation(root: -1)
+      new_fails_validation(FunctionClauseError, root: -1)
     end
 
     test "fails on too high root" do
-      new_fails_validation(root: 7)
+      new_fails_validation(FunctionClauseError, root: 7)
     end
   end
 

@@ -1,20 +1,23 @@
 # Composition bot #
 
 ## TODOs ##
-- Music module for lilypond export
+- Rule of the octave
+    - requires TODO RomanChord impl
+
+- Make things index from 1, especially scale degrees
+
 - Create pitches from string
 
-- PartimentoChordsGenerator
+- [BIG] PartimentoChordsGenerator
   - Finish PartimentoChordsGenerator next_chord
-    - requires TODO RomanChord impl
-  - Rule of the octave
-    - Then try randomised stepping bass notes
+  - Then try randomised stepping bass notes
   - Look at schemas on openmusictheory
 - Data export
 - Cadences
 - Rests
 - Remove parallels
-- Make the non composing stuff its own library
+
+- Make the non composing stuff its own module/library
 
 ## Composition Process ##
 
