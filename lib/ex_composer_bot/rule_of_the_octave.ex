@@ -11,7 +11,7 @@ defmodule ExComposerBot.RuleOfTheOctave do
     current_bass = %Pitch{},
     scale = %Scale{}
   ) do
-    _steps = Scale.steps_between(scale, current_bass, next_bass)
+    steps = Scale.steps_between(scale, current_bass, next_bass)
     # TODO New steps to create triad with inversions
     #     inversion =
     #       case Scale.degree_of(next_bass) do

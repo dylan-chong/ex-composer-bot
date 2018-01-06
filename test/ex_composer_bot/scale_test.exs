@@ -114,32 +114,32 @@ defmodule ExComposerBotTest.Scale do
     test "c to c on same octave" do
       assert 0 == Scale.steps_between(
         Scale.c_major(),
-        Scale.c_major() |> Scale.at(0),
-        Scale.c_major() |> Scale.at(0)
+        Scale.c_major() |> Scale.at(1),
+        Scale.c_major() |> Scale.at(1)
       )
     end
 
     test "c to e" do
       assert 2 == Scale.steps_between(
         Scale.c_major(),
-        Scale.c_major() |> Scale.at(0),
-        Scale.c_major() |> Scale.at(2)
+        Scale.c_major() |> Scale.at(1),
+        Scale.c_major() |> Scale.at(3)
       )
     end
 
     test "b down to g" do
       assert -2 == Scale.steps_between(
         Scale.c_major(),
-        Scale.c_major() |> Scale.at(6),
-        Scale.c_major() |> Scale.at(4)
+        Scale.c_major() |> Scale.at(7),
+        Scale.c_major() |> Scale.at(5)
       )
     end
 
     test "c up to b" do
       assert 6 == Scale.steps_between(
         Scale.c_major(),
-        Scale.c_major() |> Scale.at(0),
-        Scale.c_major() |> Scale.at(6)
+        Scale.c_major() |> Scale.at(1),
+        Scale.c_major() |> Scale.at(7)
       )
     end
 
