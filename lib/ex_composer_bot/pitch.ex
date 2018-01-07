@@ -5,12 +5,12 @@ defmodule ExComposerBot.Pitch do
 
   alias ExComposerBot.Pitch, as: Pitch
 
-  # LilyPond's default octave number"
+  # LilyPond's default octave number
   @lily_default_octave 3
 
   @doc """
   * :number - The pitch number of the semitone where 0 is 'C' and 11 is 'B'.
-  This includes the alteration, so 1 will be c# or db.
+  This includes the alteration, so a pitch number of 1 will be c# or db.
   * :octave - Middle C, and all notes up to (and including) the next B, has
   number 4.
   * :alteration - The accidental: 0 for natural, 1 for sharp, 2 for double
@@ -50,7 +50,7 @@ defmodule ExComposerBot.Pitch do
     octaves = if octave == @lily_default_octave do
       ""
     else
-      char = if octave < @lily_default_octave, do: ',', else: '\''
+      char = if octave < @lily_default_octave, do: ",", else: "'"
       fn -> char end
       |> Stream.repeatedly()
       |> Enum.take(abs(octave - @lily_default_octave))
@@ -64,13 +64,13 @@ defmodule ExComposerBot.Pitch do
   ## Examples
 
       iex> Pitch.letter(Pitch.new(number: 0))
-      'c'
+      "c"
 
       iex> Pitch.letter(Pitch.new(number: 6, alteration: -1))
-      'g'
+      "g"
 
   """
-  @spec letter(t) :: charlist
+  @spec letter(t) :: String.t
   def letter(%Pitch{number: number, alteration: alteration}) do
     # Add 12 to account for the possibility of negative numbers
     letter(rem(number - alteration + 12, 12))
@@ -81,18 +81,18 @@ defmodule ExComposerBot.Pitch do
 
   The alteration should have been accounted for when this method is called
   because this method only accepts natural notes. The pitch_number of `dis` will
-  cause an error to be thrown, and the pitch_number of `cisis` will return `'d'`).
+  cause an error to be thrown, and the pitch_number of `cisis` will return `"d"`).
   """
-  @spec letter(integer) :: charlist
+  @spec letter(integer) :: String.t
   def letter(pitch_number) when is_integer(pitch_number) do
     case pitch_number do
-      0 -> 'c'
-      2 -> 'd'
-      4 -> 'e'
-      5 -> 'f'
-      7 -> 'g'
-      9 -> 'a'
-      11 -> 'b'
+      0 -> "c"
+      2 -> "d"
+      4 -> "e"
+      5 -> "f"
+      7 -> "g"
+      9 -> "a"
+      11 -> "b"
       _ -> raise "pitch_number #{pitch_number} is not natural"
     end
   end

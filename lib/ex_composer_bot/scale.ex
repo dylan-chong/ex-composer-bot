@@ -113,7 +113,7 @@ defmodule ExComposerBot.Scale do
   Get scale using 1-based-degree.
 
       iex> at(c_major(), 1) |> Pitch.letter()
-      'c'
+      "c"
 
   """
   def at(%Scale{pitches: pitches}, degree)

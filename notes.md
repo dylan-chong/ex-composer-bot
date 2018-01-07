@@ -1,10 +1,6 @@
 # Composition bot #
 
 ## TODOs ##
-- make stuff 1-based index
-  - scale
-- convert 'a' to "a" in Pitch
-
 - Rule of the octave
     - requires TODO RomanChord impl
 

@@ -46,42 +46,42 @@ defmodule ExComposerBotTest.Pitch do
   describe "letter returns base letter for pitch" do
     test "c" do
       p = Pitch.new(number: 0)
-      assert Pitch.letter(p) == 'c'
+      assert Pitch.letter(p) == "c"
     end
 
     test "b" do
       p = Pitch.new(number: 11)
-      assert Pitch.letter(p) == 'b'
+      assert Pitch.letter(p) == "b"
     end
 
     test "cis" do
       p = Pitch.new(number: 1, alteration: 1)
-      assert Pitch.letter(p) == 'c'
+      assert Pitch.letter(p) == "c"
     end
 
     test "bis (returns b, not c)" do
       p = Pitch.new(number: 0, alteration: 1)
-      assert Pitch.letter(p) == 'b'
+      assert Pitch.letter(p) == "b"
     end
 
     test "fis" do
       p = Pitch.new(number: 6, alteration: 1)
-      assert Pitch.letter(p) == 'f'
+      assert Pitch.letter(p) == "f"
     end
 
     test "ges" do
       p = Pitch.new(number: 6, alteration: -1)
-      assert Pitch.letter(p) == 'g'
+      assert Pitch.letter(p) == "g"
     end
 
     test "cisis returns g" do
       p = Pitch.new(number: 2, alteration: 2)
-      assert Pitch.letter(p) == 'c'
+      assert Pitch.letter(p) == "c"
     end
 
     test "beses returns b" do
       p = Pitch.new(number: 9, alteration: -2)
-      assert Pitch.letter(p) == 'b'
+      assert Pitch.letter(p) == "b"
     end
   end
 
