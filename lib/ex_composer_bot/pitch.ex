@@ -28,10 +28,12 @@ defmodule ExComposerBot.Pitch do
       and is_integer(pitch.octave)
       and pitch.alteration in -2..2
     ) do
-      raise ArgumentError, "Invalid pitch: #{pitch}"
+      raise ArgumentError, "Invalid pitch: #{inspect(pitch)}"
     end
     pitch
   end
+
+  def default_octave, do: @lily_default_octave
 
   @doc """
   Exports this `Pitch` to a format that can be pasted into LilyPond

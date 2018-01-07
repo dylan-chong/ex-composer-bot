@@ -4,23 +4,28 @@ defmodule ExComposerBot.RuleOfTheOctave do
   http://faculty-web.at.northwestern.edu/music/gjerdingen/partimenti/aboutParti/ruleOfTheOctave.htm
   """
 
-  alias ExComposerBot.{Pitch, Scale}
+  alias ExComposerBot.{Pitch, Scale, Chord.RomanChord}
 
   def next_chord(
     next_bass = %Pitch{},
-    current_bass = %Pitch{},
+    _current_bass = %Pitch{},
     scale = %Scale{}
   ) do
-    steps = Scale.steps_between(scale, current_bass, next_bass)
-    # TODO New steps to create triad with inversions
-    #     inversion =
-    #       case Scale.degree_of(next_bass) do
-    #         0 -> 0
-    #         4 -> 0
-    #         _ -> 1
-    #       end
+    next_bass_degree = Scale.degree_of(scale, next_bass)
+    next_inversion =
+      case next_bass_degree do
+        1 -> 0
+        5 -> 0
+        _ -> 1
+      end
 
-    #       # TODO write 7th chords for rule of the octave above
+    RomanChord.new(
+      root: RomanChord.root_for(next_bass_degree, next_inversion, scale),
+      inversion: next_inversion,
+      scale: scale,
+    )
+
+    # TODO write 7th chords for rule of the octave above
   end
 
 end

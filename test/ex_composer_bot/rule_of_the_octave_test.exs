@@ -2,8 +2,7 @@ defmodule ExComposerBotTest.RuleOfTheOctave do
   use ExUnit.Case
   alias ExComposerBot.{RuleOfTheOctave, Pitch, Scale, Chord.RomanChord}
 
-  describe "next_chord for the bass ascending from" do
-    @tag :todo
+  describe "next_chord for the bass" do
     test "c to d" do
       c = Pitch.new(number: 0)
       b = Pitch.new(number: 11)

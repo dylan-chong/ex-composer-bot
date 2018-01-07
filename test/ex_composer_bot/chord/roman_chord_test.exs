@@ -1,6 +1,6 @@
 defmodule ExComposerBotTest.RomanChordTest do
   use ExUnit.Case
-  alias ExComposerBot.{Scale, Chord.RomanChord}
+  alias ExComposerBot.{Scale, Chord.RomanChord, Pitch}
   doctest RomanChord, import: true
 
   describe "new" do
@@ -37,6 +37,32 @@ defmodule ExComposerBotTest.RomanChordTest do
 
     test "fails on too high root" do
       new_fails_validation(FunctionClauseError, root: 8)
+    end
+  end
+
+  describe "standardises octave" do
+    test "when passing a pitch as the root" do
+      expected_octave = Pitch.default_octave()
+      assert expected_octave ==
+        [
+          root: Pitch.new(number: 0, octave: expected_octave + 3),
+          scale: Scale.c_major(),
+        ]
+        |> RomanChord.new()
+        |> Map.get(:root)
+        |> Map.get(:octave)
+    end
+
+    test "when passing a degree/integer" do
+      expected_octave = Pitch.default_octave()
+      assert expected_octave ==
+        [
+          root: 1,
+          scale: Scale.c_major(),
+        ]
+        |> RomanChord.new()
+        |> Map.get(:root)
+        |> Map.get(:octave)
     end
   end
 

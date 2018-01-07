@@ -2,11 +2,12 @@
 
 ## TODOs ##
 - Rule of the octave
-    - requires TODO RomanChord impl
 
 - Create pitches from string
+- Rename Chord to BaseChord because notes not specific
 
 - [BIG] PartimentoChordsGenerator
+  - RomanChord impl
   - Finish PartimentoChordsGenerator next_chord
   - Then try randomised stepping bass notes
   - Look at schemas on openmusictheory

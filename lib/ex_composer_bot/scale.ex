@@ -125,6 +125,50 @@ defmodule ExComposerBot.Scale do
     length(pitches)
   end
 
+  @doc """
+  Wrap the given degree so it is not out of bounds.
+
+      iex> mod_degree(c_major(), 0)
+      7
+
+      iex> mod_degree(c_major(), 1)
+      1
+
+      iex> mod_degree(c_major(), 8)
+      1
+
+      iex> mod_degree(c_major(), -3)
+      4
+
+  """
+  def mod_degree(scale = %Scale{}, degree) when is_integer(degree) do
+    s_size = size(scale)
+    case rem(s_size + degree, s_size) do
+      0 -> s_size
+      d -> d
+    end
+  end
+
+  @doc """
+  Wrap the given degree so it is not out of bounds.
+
+      iex> valid_degree?(c_major(), 1)
+      true
+
+      iex> valid_degree?(c_major(), 7)
+      true
+
+      iex> valid_degree?(c_major(), 0)
+      false
+
+      iex> valid_degree?(c_major(), 8)
+      false
+
+  """
+  def valid_degree?(scale = %Scale{}, degree) when is_integer(degree) do
+    mod_degree(scale, degree) == degree
+  end
+
   def steps_between(scale = %Scale{}, startp = %Pitch{}, endp = %Pitch{}) do
     octave_diff = endp.octave - startp.octave
     if octave_diff != 0 do

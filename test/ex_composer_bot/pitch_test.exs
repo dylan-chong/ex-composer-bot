@@ -2,9 +2,31 @@ defmodule ExComposerBotTest.Pitch do
   @moduledoc false
 
   use ExUnit.Case, async: true
-  alias ExComposerBot.Pitch, as: Pitch
+  alias ExComposerBot.Pitch
 
   doctest Pitch, import: true
+
+  describe "validate_struct" do
+    test "passes for valid pitch" do
+      Pitch.new(number: 0, octave: 3, alteration: 2)
+    end
+
+    test "fails for pitch with too low pitch number" do
+      assert_raise(
+        ArgumentError,
+        ~r"Invalid pitch.*",
+        fn -> Pitch.new(number: -1, octave: 3, alteration: 2) end
+      )
+    end
+
+    test "fails for pitch with too high pitch number" do
+      assert_raise(
+        ArgumentError,
+        ~r"Invalid pitch.*",
+        fn -> Pitch.new(number: 12, octave: 3, alteration: 2) end
+      )
+    end
+  end
 
   describe "to_lily_string returns correct format for a pitch" do
     test "an octave below middle c" do
