@@ -28,6 +28,9 @@ defmodule ExComposerBot.Pitch do
      {-2, "eses"}, # double flat
   ]
 
+  @increase_octave "'"
+  @decrease_octave ","
+
   @doc """
   * :number - The pitch number of the semitone where 0 is 'C' and 11 is 'B'.
   This includes the alteration, so a pitch number of 1 will be c# or db.
@@ -72,7 +75,11 @@ defmodule ExComposerBot.Pitch do
     octaves = if octave == @lily_default_octave do
       ""
     else
-      char = if octave < @lily_default_octave, do: ",", else: "'"
+      char = if octave < @lily_default_octave do
+        @decrease_octave
+      else
+        @increase_octave
+      end
       fn -> char end
       |> Stream.repeatedly()
       |> Enum.take(abs(octave - @lily_default_octave))
@@ -134,7 +141,11 @@ defmodule ExComposerBot.Pitch do
   end
 
   @doc """
-  See `ExComposerBotTest.Pitch` for examples.
+  See `ExComposerBotTest.Pitch` for more examples.
+
+      iex> from_string("cis'")
+      %Pitch{number: 1, alteration: 1, octave: Pitch.default_octave() + 1}
+
   """
   def from_string(string) when is_bitstring(string) do
     (~r/^(?<letter>[a-gA-G])(?<alteration>(?:(?:is)|(?:es)){0,2})(?<octave_shift>(?:,*|'*))$/)
@@ -157,14 +168,17 @@ defmodule ExComposerBot.Pitch do
           letter_any_case
           |> String.downcase()
           |> pitch_num_from_letter()
-        letter = rem(letter_ignoring_alteration + alteration + @max_num + 1, @max_num + 1)
+        letter = rem(
+          letter_ignoring_alteration + alteration + @max_num + 1,
+          @max_num + 1
+        )
 
         octave = default_octave() + case String.at(octave_shift, 0) do
           nil ->
             0
-          "," ->
+          @decrease_octave ->
             -String.length(octave_shift)
-          "'" ->
+          @increase_octave ->
             String.length(octave_shift)
         end
 
