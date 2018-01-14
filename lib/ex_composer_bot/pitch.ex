@@ -8,6 +8,26 @@ defmodule ExComposerBot.Pitch do
   # LilyPond's default octave number
   @lily_default_octave 3
 
+  @pitch_number_to_letters [
+    {0 , "c"},
+    {2 , "d"},
+    {4 , "e"},
+    {5 , "f"},
+    {7 , "g"},
+    {9 , "a"},
+    {11, "b"},
+  ]
+
+  @max_num 11
+
+  @alterations [
+     {0, ""}, # natural
+     {1, "is"}, # sharp
+     {2, "isis"}, # double sharp
+     {-1, "es"}, # flat
+     {-2, "eses"}, # double flat
+  ]
+
   @doc """
   * :number - The pitch number of the semitone where 0 is 'C' and 11 is 'B'.
   This includes the alteration, so a pitch number of 1 will be c# or db.
@@ -24,7 +44,7 @@ defmodule ExComposerBot.Pitch do
   @impl true
   def validate_struct(pitch, _) do
     unless (
-      pitch.number in 0..11
+      pitch.number in 0..@max_num
       and is_integer(pitch.octave)
       and pitch.alteration in -2..2
     ) do
@@ -87,15 +107,14 @@ defmodule ExComposerBot.Pitch do
   """
   @spec letter(integer) :: String.t
   def letter(pitch_number) when is_integer(pitch_number) do
-    case pitch_number do
-      0 -> "c"
-      2 -> "d"
-      4 -> "e"
-      5 -> "f"
-      7 -> "g"
-      9 -> "a"
-      11 -> "b"
-      _ -> raise "pitch_number #{pitch_number} is not natural"
+    @pitch_number_to_letters
+    |> Enum.find(fn {p_num, _} -> p_num == pitch_number end)
+    |> case do
+      {_, letter} ->
+        letter
+      nil ->
+        raise ArgumentError,
+          "pitch_number #{pitch_number} is not natural or invalid"
     end
   end
 
@@ -104,29 +123,82 @@ defmodule ExComposerBot.Pitch do
   """
   @spec alteration_to_string(Pitch.t) :: String.t
   def alteration_to_string(%Pitch{alteration: alteration}) do
-    case alteration do
-      0 -> "" # natural
-      1 -> "is" # sharp
-      2 -> "isis" # double sharp
-      -1 -> "es" # flat
-      -2 -> "eses" # double flat
-      _ -> raise "Invalid alteration %{alteration}"
+    @alterations
+    |> Enum.find(fn {num, _} -> num == alteration end)
+    |> case do
+      {_, string} ->
+        string
+      _ ->
+        raise "Invalid alteration %{alteration}"
+    end
+  end
+
+  def from_string(string) when is_bitstring(string) do
+    (~r/^(?<letter>[a-gA-G])(?<alteration>(?:(?:is)|(?:es)){0,2})(?<octave_shift>(?:,*|'*))$/)
+    |> Regex.named_captures(string)
+    |> case do
+      nil ->
+        raise ArgumentError, "Invalid string: #{string}"
+      %{
+        "letter" => letter_any_case,
+        "alteration" => alteration_string,
+        "octave_shift" => octave_shift,
+      } ->
+        {alteration, _} = Enum.find(
+          @alterations,
+          {0, :ignored},
+          fn {_, str} -> str == alteration_string end
+        )
+
+        letter_ignoring_alteration =
+          letter_any_case
+          |> String.downcase()
+          |> pitch_num_from_letter()
+        letter = rem(letter_ignoring_alteration + alteration + @max_num + 1, @max_num + 1)
+
+        octave = default_octave() + case String.at(octave_shift, 0) do
+          nil ->
+            0
+          "," ->
+            -String.length(octave_shift)
+          "'" ->
+            String.length(octave_shift)
+        end
+
+        new(
+          number: letter,
+          alteration: alteration,
+          octave: octave,
+        )
+    end
+  end
+
+  def pitch_num_from_letter(pitch_letter) when is_bitstring(pitch_letter) do
+    @pitch_number_to_letters
+    |> Enum.find(fn {_, letter} -> pitch_letter == letter end)
+    |> case do
+      {pitch_num, _} ->
+        pitch_num
+      nil ->
+        raise ArgumentError, "pitch_letter #{pitch_letter} is invalid"
     end
   end
 
   @spec letters :: list(String.grapheme)
   def letters do
-    String.graphemes("cdefgab")
+    Enum.map(@pitch_number_to_letters, fn {_, letter} -> letter end)
   end
 
   @spec c_major_numbers :: list(integer)
   def c_major_numbers do
-    [0, 2, 4, 5, 7, 9, 11]
+    Enum.map(@pitch_number_to_letters, fn {num, _} -> num end)
   end
 
-  def equals_ignore_octave(pitch_a = %Pitch{}, pitch_b = %Pitch{}) do
-    pitch_a.number == pitch_b.number &&
-        pitch_a.alteration == pitch_b.alteration
-  end
+  def equals_ignore_octave(
+    %Pitch{number: n, alteration: a},
+    %Pitch{number: n, alteration: a}
+  ), do: true
+
+  def equals_ignore_octave(%Pitch{}, %Pitch{}), do: false
 
 end

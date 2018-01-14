@@ -1,9 +1,13 @@
 # Composition bot #
 
 ## TODOs ##
-- Rule of the octave
+- Create pitches from string - Pitch.of
+  - constant for ","
+  - adn roman chord
+  - and more
 
-- Create pitches from string
+- Add more tests for Rule of the octave
+- Add 7th chords in Rule of the octave
 - Rename Chord to BaseChord because notes not specific
 
 - [BIG] PartimentoChordsGenerator

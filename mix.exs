@@ -39,12 +39,15 @@ defmodule ExComposerBot.Mixfile do
     [
       # Project dependencies
       {:credo, "~> 0.8.8", only: [:dev, :test]},
-      {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
       {:excoveralls, "~> 0.7", only: :test},
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false}, # TODO remove
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
 
-      # Code dependencies
+      # Tests
+      {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
+      {:ex_parameterized, "~> 1.3.0", only: :test, runtime: false},
+
+      # Runtime dependencies
       {:ex_structable, "~> 0.3.0"},
     ]
   end

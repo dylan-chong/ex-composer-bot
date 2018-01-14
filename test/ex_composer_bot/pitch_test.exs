@@ -2,6 +2,7 @@ defmodule ExComposerBotTest.Pitch do
   @moduledoc false
 
   use ExUnit.Case, async: true
+  use ExUnit.Parameterized
   alias ExComposerBot.Pitch
 
   doctest Pitch, import: true
@@ -31,37 +32,42 @@ defmodule ExComposerBotTest.Pitch do
   describe "to_lily_string returns correct format for a pitch" do
     test "an octave below middle c" do
       p = Pitch.new(number: 0, octave: 3)
-      assert Pitch.to_lily_string(p) ==  "c"
+      assert Pitch.to_lily_string(p) == "c"
     end
 
-    test "with above middle c" do
+    test "above middle c" do
       p = Pitch.new(number: 7, octave: 4)
-      assert Pitch.to_lily_string(p) ==  "g'"
+      assert Pitch.to_lily_string(p) == "g'"
     end
 
     test "roughly 2 octaves below middle c" do
       p = Pitch.new(number: 4, octave: 2)
-      assert Pitch.to_lily_string(p) ==  "e,"
+      assert Pitch.to_lily_string(p) == "e,"
     end
 
     test "with a sharp" do
       p = Pitch.new(number: 8, alteration: 1)
-      assert Pitch.to_lily_string(p) ==  "gis"
+      assert Pitch.to_lily_string(p) == "gis"
     end
 
     test "with a flat" do
       p = Pitch.new(number: 10, alteration: -1)
-      assert Pitch.to_lily_string(p) ==  "bes"
+      assert Pitch.to_lily_string(p) == "bes"
     end
 
-    test "with a flat, 2 octaves below middle c" do
+    test "with a flat, below middle c" do
       p = Pitch.new(number: 10, alteration: -1, octave: 4)
-      assert Pitch.to_lily_string(p) ==  "bes'"
+      assert Pitch.to_lily_string(p) == "bes'"
+    end
+
+    test "with a sharp, 2 octaves below middle c" do
+      p = Pitch.new(number: 0, alteration: 1, octave: 2)
+      assert Pitch.to_lily_string(p) == "bis,"
     end
 
     test "2 octaves above middle c" do
       p = Pitch.new(number: 0, octave: 5)
-      assert Pitch.to_lily_string(p) ==  "c''"
+      assert Pitch.to_lily_string(p) == "c''"
     end
   end
 
@@ -105,6 +111,34 @@ defmodule ExComposerBotTest.Pitch do
       p = Pitch.new(number: 9, alteration: -2)
       assert Pitch.letter(p) == "b"
     end
+  end
+
+  test_with_params "from_string returns correct value for",
+  fn string, pitch_args ->
+    assert Pitch.new(pitch_args) == Pitch.from_string(string)
+  end do
+    [
+      # Default octave
+      "c": {"c", number: 0, octave: Pitch.default_octave()},
+      "d": {"d", number: 2},
+      "e": {"e", number: 4},
+      "g": {"g", number: 7},
+      "b": {"b", number: 11, octave: Pitch.default_octave()},
+
+      # Different octaves
+      "c'": {"c'", number: 0, octave: Pitch.default_octave() + 1},
+      "f''": {"f''", number: 5, octave: Pitch.default_octave() + 2},
+      "b'''''": {"b'''''", number: 11, octave: Pitch.default_octave() + 5},
+      "a,": {"a,", number: 9, octave: Pitch.default_octave() - 1},
+      "a,,": {"a,,", number: 9, octave: Pitch.default_octave() - 2},
+
+      "cis": {"cis", number: 1, alteration: 1},
+      "disis": {"disis", number: 4, alteration: 2},
+      "ees": {"ees", number: 3, alteration: -1},
+      "geses": {"geses", number: 5, alteration: -2},
+
+      "ges'": {"ges", number: 6, octave: Pitch.default_octave(), alteration: -1},
+    ]
   end
 
 end

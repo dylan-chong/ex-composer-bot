@@ -38,6 +38,10 @@ defmodule ExComposerBotTest.RomanChordTest do
     test "fails on too high root" do
       new_fails_validation(FunctionClauseError, root: 8)
     end
+
+    test "fails on invalid modification" do
+      new_fails_validation(ArgumentError, mods: [:invalid_mod])
+    end
   end
 
   describe "standardises octave" do
@@ -64,6 +68,11 @@ defmodule ExComposerBotTest.RomanChordTest do
         |> Map.get(:root)
         |> Map.get(:octave)
     end
+  end
+
+  @tag :todo
+  test ":has_7th mod adds 7th degree" do
+
   end
 
 end

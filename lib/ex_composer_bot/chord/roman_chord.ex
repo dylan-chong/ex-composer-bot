@@ -1,5 +1,8 @@
 defmodule ExComposerBot.Chord.RomanChord do
-  @moduledoc ""
+  @moduledoc """
+  Represents a possibly inverted triad, optionally with modifications such as
+  :has_7th.
+  """
 
   alias ExComposerBot.{Chord.RomanChord, Scale, Pitch}
 
@@ -11,6 +14,8 @@ defmodule ExComposerBot.Chord.RomanChord do
   `ExComposerBot.Scale.at/2`).
   * :inversion - Root position is 0. 1st inversion is 1...
   * :scale - The `ExComposerBot.Scale` that this chord is part of.
+  * :mods - List of atoms stating what modifications should be applied to the
+  basic form of this chord.
 
   TODO Find a way to represent seventh chords, also suspensions
   """
@@ -19,37 +24,47 @@ defmodule ExComposerBot.Chord.RomanChord do
     :root,
     :scale,
     inversion: 0,
+    mods: [],
   ]
 
   use ExStructable
 
   @impl true
-  def validate_struct(
-    chord = %RomanChord{scale: scale = %Scale{}, root: root},
-    _
-  ) do
-    chord = %RomanChord{chord | root:
-      case root do
+  def validate_struct(chord = %RomanChord{scale: scale = %Scale{}}, _) do
+    chord = Map.put(chord, :root,
+      chord.root
+      |> case do
         %Pitch{} ->
-          Scale.degree_of(scale, root, fn _ ->
+          Scale.degree_of(scale, chord.root, fn _ ->
             raise ArgumentError,
-              "Root not in scale in for chord #{inspect(chord)}"
+            "Root not in scale in for chord #{inspect(chord)}"
           end)
-          root
+          chord.root
         degree when is_integer(degree) ->
           # Assume Scale.at throws on invalid degree
           Scale.at(scale, degree)
       end
-    }
-    chord = %RomanChord{chord | root:
-      Pitch.put(chord.root, octave: Pitch.default_octave())
-    }
+      |> Pitch.put(octave: Pitch.default_octave())
+    )
+    chord = Map.put(chord, :mods, List.wrap(chord.mods))
+
+    set_mods = MapSet.new(chord.mods)
+    unless MapSet.subset?(set_mods, valid_modifications())
+        or Enum.count(set_mods) != Enum.count(chord.mods) do
+      raise ArgumentError, "Chord has invalid :mods, #{inspect(chord)}"
+    end
 
     unless chord.inversion in 0..2 do
       raise ArgumentError, "Invalid inversion in chord, #{inspect(chord)}"
     end
 
     chord
+  end
+
+  def valid_modifications do
+    MapSet.new([
+      :has_7th,
+    ])
   end
 
   @doc """

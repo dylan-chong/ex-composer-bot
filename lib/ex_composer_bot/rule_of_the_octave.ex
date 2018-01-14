@@ -8,9 +8,10 @@ defmodule ExComposerBot.RuleOfTheOctave do
 
   def next_chord(
     next_bass = %Pitch{},
-    _current_bass = %Pitch{},
+    current_bass = %Pitch{},
     scale = %Scale{}
   ) do
+    _current_bass_degree = Scale.degree_of(scale, current_bass)
     next_bass_degree = Scale.degree_of(scale, next_bass)
     next_inversion =
       case next_bass_degree do
@@ -25,7 +26,8 @@ defmodule ExComposerBot.RuleOfTheOctave do
       scale: scale,
     )
 
-    # TODO write 7th chords for rule of the octave above
+    # TODO return same chord if bass has same degree
+    # TODO hard-code ruleOfTheOctave based on asc/desc
   end
 
 end
