@@ -69,6 +69,16 @@ defmodule ExComposerBotTest.Pitch do
       p = Pitch.new(number: 0, octave: 5)
       assert Pitch.to_lily_string(p) == "c''"
     end
+
+    test "bis which shouldn't overflow the octave in terms of ' or , symbols" do
+      p = Pitch.new(number: 0, alteration: 1)
+      assert Pitch.to_lily_string(p) == "bis"
+    end
+
+    test "ces which shouldn't overflow the octave in terms of ' or , symbols" do
+      p = Pitch.new(number: 11, alteration: -1)
+      assert Pitch.to_lily_string(p) == "ces"
+    end
   end
 
   describe "letter returns base letter for pitch" do
@@ -132,12 +142,19 @@ defmodule ExComposerBotTest.Pitch do
       "a,": {"a,", number: 9, octave: Pitch.default_octave() - 1},
       "a,,": {"a,,", number: 9, octave: Pitch.default_octave() - 2},
 
+      # Accidentals
       "cis": {"cis", number: 1, alteration: 1},
       "disis": {"disis", number: 4, alteration: 2},
       "ees": {"ees", number: 3, alteration: -1},
       "geses": {"geses", number: 5, alteration: -2},
 
-      "ges'": {"ges", number: 6, octave: Pitch.default_octave(), alteration: -1},
+      # Octaves + Accidentals
+      "fis,": {"fis,", number: 6, octave: Pitch.default_octave() - 1, alteration: 1},
+      "ges'": {"ges'", number: 6, octave: Pitch.default_octave() + 1, alteration: -1},
+
+      # Accidentals shouldn't affect the octave
+      "bis": {"bis", number: 0, octave: Pitch.default_octave(), alteration: 1},
+      "ces": {"ces", number: 11, octave: Pitch.default_octave(), alteration: -1},
     ]
   end
 

@@ -133,6 +133,9 @@ defmodule ExComposerBot.Pitch do
     end
   end
 
+  @doc """
+  See `ExComposerBotTest.Pitch` for examples.
+  """
   def from_string(string) when is_bitstring(string) do
     (~r/^(?<letter>[a-gA-G])(?<alteration>(?:(?:is)|(?:es)){0,2})(?<octave_shift>(?:,*|'*))$/)
     |> Regex.named_captures(string)
