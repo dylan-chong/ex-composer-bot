@@ -9,20 +9,21 @@ defmodule ExComposerBot.Voice do
   @doc """
   * :notes - A list of `Note`, starting with the last note (reverse order)
   """
-  @type t :: %Voice{notes: list(Note.t)}
+  @type t :: %Voice{notes: list(Note.t())}
   @enforce_keys [:notes]
   defstruct [:notes]
   use ExStructable
 
   @impl true
   def validate_struct(voice = %Voice{notes: notes}, _) do
-    unless Enum.all?(notes, &(match?(%Note{}, &1))) do
+    unless Enum.all?(notes, &match?(%Note{}, &1)) do
       raise "Invalid voice #{inspect(voice)}"
     end
+
     voice
   end
 
-  @spec to_lily_string(Voice.t) :: String.t
+  @spec to_lily_string(Voice.t()) :: String.t()
   def to_lily_string(%Voice{notes: notes}) do
     notes
     |> Enum.reverse()
@@ -31,7 +32,7 @@ defmodule ExComposerBot.Voice do
     |> into_voice_string()
   end
 
-  @spec into_voice_string(String.t) :: String.t
+  @spec into_voice_string(String.t()) :: String.t()
   def into_voice_string(notes_string) when is_bitstring(notes_string) do
     """
     \\absolute \\new Voice {
@@ -39,5 +40,4 @@ defmodule ExComposerBot.Voice do
     }
     """
   end
-
 end

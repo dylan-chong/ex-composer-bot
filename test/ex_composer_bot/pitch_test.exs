@@ -124,16 +124,16 @@ defmodule ExComposerBotTest.Pitch do
   end
 
   test_with_params "from_string returns correct value for",
-  fn string, pitch_args ->
-    assert Pitch.new(pitch_args) == Pitch.from_string(string)
-  end do
+                   fn string, pitch_args ->
+                     assert Pitch.new(pitch_args) == Pitch.from_string(string)
+                   end do
     [
       # Default octave
-      "c": {"c", number: 0, octave: Pitch.default_octave()},
-      "d": {"d", number: 2},
-      "e": {"e", number: 4},
-      "g": {"g", number: 7},
-      "b": {"b", number: 11, octave: Pitch.default_octave()},
+      c: {"c", number: 0, octave: Pitch.default_octave()},
+      d: {"d", number: 2},
+      e: {"e", number: 4},
+      g: {"g", number: 7},
+      b: {"b", number: 11, octave: Pitch.default_octave()},
 
       # Different octaves
       "c'": {"c'", number: 0, octave: Pitch.default_octave() + 1},
@@ -143,19 +143,18 @@ defmodule ExComposerBotTest.Pitch do
       "a,,": {"a,,", number: 9, octave: Pitch.default_octave() - 2},
 
       # Accidentals
-      "cis": {"cis", number: 1, alteration: 1},
-      "disis": {"disis", number: 4, alteration: 2},
-      "ees": {"ees", number: 3, alteration: -1},
-      "geses": {"geses", number: 5, alteration: -2},
+      cis: {"cis", number: 1, alteration: 1},
+      disis: {"disis", number: 4, alteration: 2},
+      ees: {"ees", number: 3, alteration: -1},
+      geses: {"geses", number: 5, alteration: -2},
 
       # Octaves + Accidentals
       "fis,": {"fis,", number: 6, octave: Pitch.default_octave() - 1, alteration: 1},
       "ges'": {"ges'", number: 6, octave: Pitch.default_octave() + 1, alteration: -1},
 
       # Accidentals shouldn't affect the octave
-      "bis": {"bis", number: 0, octave: Pitch.default_octave(), alteration: 1},
-      "ces": {"ces", number: 11, octave: Pitch.default_octave(), alteration: -1},
+      bis: {"bis", number: 0, octave: Pitch.default_octave(), alteration: 1},
+      ces: {"ces", number: 11, octave: Pitch.default_octave(), alteration: -1}
     ]
   end
-
 end

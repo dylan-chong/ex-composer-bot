@@ -9,23 +9,28 @@ defmodule ExComposerBot.Pitch do
   @lily_default_octave 3
 
   @pitch_number_to_letters [
-    {0 , "c"},
-    {2 , "d"},
-    {4 , "e"},
-    {5 , "f"},
-    {7 , "g"},
-    {9 , "a"},
-    {11, "b"},
+    {0, "c"},
+    {2, "d"},
+    {4, "e"},
+    {5, "f"},
+    {7, "g"},
+    {9, "a"},
+    {11, "b"}
   ]
 
   @max_num 11
 
   @alterations [
-     {0, ""}, # natural
-     {1, "is"}, # sharp
-     {2, "isis"}, # double sharp
-     {-1, "es"}, # flat
-     {-2, "eses"}, # double flat
+    # natural
+    {0, ""},
+    # sharp
+    {1, "is"},
+    # double sharp
+    {2, "isis"},
+    # flat
+    {-1, "es"},
+    # double flat
+    {-2, "eses"}
   ]
 
   @increase_octave "'"
@@ -46,13 +51,10 @@ defmodule ExComposerBot.Pitch do
 
   @impl true
   def validate_struct(pitch, _) do
-    unless (
-      pitch.number in 0..@max_num
-      and is_integer(pitch.octave)
-      and pitch.alteration in -2..2
-    ) do
+    unless pitch.number in 0..@max_num and is_integer(pitch.octave) and pitch.alteration in -2..2 do
       raise ArgumentError, "Invalid pitch: #{inspect(pitch)}"
     end
+
     pitch
   end
 
@@ -70,21 +72,24 @@ defmodule ExComposerBot.Pitch do
       "gis"
 
   """
-  @spec to_lily_string(t) :: String.t
+  @spec to_lily_string(t) :: String.t()
   def to_lily_string(pitch = %Pitch{octave: octave}) do
-    octaves = if octave == @lily_default_octave do
-      ""
-    else
-      char = if octave < @lily_default_octave do
-        @decrease_octave
+    octaves =
+      if octave == @lily_default_octave do
+        ""
       else
-        @increase_octave
+        char =
+          if octave < @lily_default_octave do
+            @decrease_octave
+          else
+            @increase_octave
+          end
+
+        fn -> char end
+        |> Stream.repeatedly()
+        |> Enum.take(abs(octave - @lily_default_octave))
+        |> to_string()
       end
-      fn -> char end
-      |> Stream.repeatedly()
-      |> Enum.take(abs(octave - @lily_default_octave))
-      |> to_string()
-    end
 
     "#{letter(pitch)}#{alteration_to_string(pitch)}#{octaves}"
   end
@@ -99,7 +104,7 @@ defmodule ExComposerBot.Pitch do
       "g"
 
   """
-  @spec letter(t) :: String.t
+  @spec letter(t) :: String.t()
   def letter(%Pitch{number: number, alteration: alteration}) do
     # Add 12 to account for the possibility of negative numbers
     letter(rem(number - alteration + 12, 12))
@@ -112,29 +117,31 @@ defmodule ExComposerBot.Pitch do
   because this method only accepts natural notes. The pitch_number of `dis` will
   cause an error to be thrown, and the pitch_number of `cisis` will return `"d"`).
   """
-  @spec letter(integer) :: String.t
+  @spec letter(integer) :: String.t()
   def letter(pitch_number) when is_integer(pitch_number) do
     @pitch_number_to_letters
     |> Enum.find(fn {p_num, _} -> p_num == pitch_number end)
     |> case do
       {_, letter} ->
         letter
+
       nil ->
         raise ArgumentError,
-          "pitch_number #{pitch_number} is not natural or invalid"
+              "pitch_number #{pitch_number} is not natural or invalid"
     end
   end
 
   @doc """
   Converts the alteration/accidental to LilyPond format
   """
-  @spec alteration_to_string(Pitch.t) :: String.t
+  @spec alteration_to_string(Pitch.t()) :: String.t()
   def alteration_to_string(%Pitch{alteration: alteration}) do
     @alterations
     |> Enum.find(fn {num, _} -> num == alteration end)
     |> case do
       {_, string} ->
         string
+
       _ ->
         raise "Invalid alteration %{alteration}"
     end
@@ -148,44 +155,52 @@ defmodule ExComposerBot.Pitch do
 
   """
   def from_string(string) when is_bitstring(string) do
-    (~r/^(?<letter>[a-gA-G])(?<alteration>(?:(?:is)|(?:es)){0,2})(?<octave_shift>(?:,*|'*))$/)
+    ~r/^(?<letter>[a-gA-G])(?<alteration>(?:(?:is)|(?:es)){0,2})(?<octave_shift>(?:,*|'*))$/
     |> Regex.named_captures(string)
     |> case do
       nil ->
         raise ArgumentError, "Invalid string: #{string}"
+
       %{
         "letter" => letter_any_case,
         "alteration" => alteration_string,
-        "octave_shift" => octave_shift,
+        "octave_shift" => octave_shift
       } ->
-        {alteration, _} = Enum.find(
-          @alterations,
-          {0, :ignored},
-          fn {_, str} -> str == alteration_string end
-        )
+        {alteration, _} =
+          Enum.find(
+            @alterations,
+            {0, :ignored},
+            fn {_, str} -> str == alteration_string end
+          )
 
         letter_ignoring_alteration =
           letter_any_case
           |> String.downcase()
           |> pitch_num_from_letter()
-        letter = rem(
-          letter_ignoring_alteration + alteration + @max_num + 1,
-          @max_num + 1
-        )
 
-        octave = default_octave() + case String.at(octave_shift, 0) do
-          nil ->
-            0
-          @decrease_octave ->
-            -String.length(octave_shift)
-          @increase_octave ->
-            String.length(octave_shift)
-        end
+        letter =
+          rem(
+            letter_ignoring_alteration + alteration + @max_num + 1,
+            @max_num + 1
+          )
+
+        octave =
+          default_octave() +
+            case String.at(octave_shift, 0) do
+              nil ->
+                0
+
+              @decrease_octave ->
+                -String.length(octave_shift)
+
+              @increase_octave ->
+                String.length(octave_shift)
+            end
 
         new(
           number: letter,
           alteration: alteration,
-          octave: octave,
+          octave: octave
         )
     end
   end
@@ -196,12 +211,13 @@ defmodule ExComposerBot.Pitch do
     |> case do
       {pitch_num, _} ->
         pitch_num
+
       nil ->
         raise ArgumentError, "pitch_letter #{pitch_letter} is invalid"
     end
   end
 
-  @spec letters :: list(String.grapheme)
+  @spec letters :: list(String.grapheme())
   def letters do
     Enum.map(@pitch_number_to_letters, fn {_, letter} -> letter end)
   end
@@ -212,10 +228,10 @@ defmodule ExComposerBot.Pitch do
   end
 
   def equals_ignore_octave(
-    %Pitch{number: n, alteration: a},
-    %Pitch{number: n, alteration: a}
-  ), do: true
+        %Pitch{number: n, alteration: a},
+        %Pitch{number: n, alteration: a}
+      ),
+      do: true
 
   def equals_ignore_octave(%Pitch{}, %Pitch{}), do: false
-
 end

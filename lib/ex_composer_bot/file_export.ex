@@ -3,7 +3,7 @@ defmodule ExComposerBot.FileExport do
 
   alias ExComposerBot.{Voice}
 
-  @spec to_lily_string(list(Voice.t)) :: String.t
+  @spec to_lily_string(list(Voice.t())) :: String.t()
   def to_lily_string(_voices = []) do
     into_lily_file_string("")
   end
@@ -26,7 +26,7 @@ defmodule ExComposerBot.FileExport do
   end
 
   defp into_lily_file_string(voices_string)
-      when is_bitstring(voices_string) do
+       when is_bitstring(voices_string) do
     """
     \\score {
 

@@ -43,10 +43,12 @@ defmodule ExComposerBotTest.Note do
     end
 
     test "chord with 2 notes" do
-      chord = Note.new(
-        pitch: Pitch.new(number: 0),
-        note_above: Note.new(pitch: Pitch.new(number: 2))
-      )
+      chord =
+        Note.new(
+          pitch: Pitch.new(number: 0),
+          note_above: Note.new(pitch: Pitch.new(number: 2))
+        )
+
       assert Note.to_lily_string(chord) == "<c d>4"
     end
 
@@ -56,6 +58,5 @@ defmodule ExComposerBotTest.Note do
       bottom = Note.new(pitch: Pitch.new(number: 0), note_above: middle)
       assert Note.to_lily_string(bottom) == "<c d ees>4"
     end
-
   end
 end

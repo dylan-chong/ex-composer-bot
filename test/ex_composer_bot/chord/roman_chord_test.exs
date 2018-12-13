@@ -47,32 +47,32 @@ defmodule ExComposerBotTest.RomanChordTest do
   describe "standardises octave" do
     test "when passing a pitch as the root" do
       expected_octave = Pitch.default_octave()
+
       assert expected_octave ==
-        [
-          root: Pitch.new(number: 0, octave: expected_octave + 3),
-          scale: Scale.c_major(),
-        ]
-        |> RomanChord.new()
-        |> Map.get(:root)
-        |> Map.get(:octave)
+               [
+                 root: Pitch.new(number: 0, octave: expected_octave + 3),
+                 scale: Scale.c_major()
+               ]
+               |> RomanChord.new()
+               |> Map.get(:root)
+               |> Map.get(:octave)
     end
 
     test "when passing a degree/integer" do
       expected_octave = Pitch.default_octave()
+
       assert expected_octave ==
-        [
-          root: 1,
-          scale: Scale.c_major(),
-        ]
-        |> RomanChord.new()
-        |> Map.get(:root)
-        |> Map.get(:octave)
+               [
+                 root: 1,
+                 scale: Scale.c_major()
+               ]
+               |> RomanChord.new()
+               |> Map.get(:root)
+               |> Map.get(:octave)
     end
   end
 
   @tag :todo
   test ":has_7th mod adds 7th degree" do
-
   end
-
 end

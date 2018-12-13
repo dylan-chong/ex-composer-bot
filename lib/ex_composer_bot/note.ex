@@ -17,29 +17,23 @@ defmodule ExComposerBot.Note do
   one.
   """
   @type t :: %Note{
-    pitch: Pitch.t | :is_rest,
-    length: integer,
-    tied: boolean,
-    note_above: Note.t | nil
-  }
+          pitch: Pitch.t() | :is_rest,
+          length: integer,
+          tied: boolean,
+          note_above: Note.t() | nil
+        }
   @enforce_keys [:pitch]
   defstruct [:pitch, length: 4, tied: false, note_above: nil]
   use ExStructable
 
   @impl true
   def validate_struct(note = %Note{length: len}, _) do
-    unless (
-      (note.pitch == :is_rest or match?(%Pitch{}, note.pitch))
-      and len > 0
-      and is_integer(len)
-      and is_boolean(note.tied)
-      and (
-        note.note_above == nil
-        or match?(%Note{length: ^len}, note.note_above)
-      )
-    ) do
+    unless (note.pitch == :is_rest or match?(%Pitch{}, note.pitch)) and len > 0 and
+             is_integer(len) and is_boolean(note.tied) and
+             (note.note_above == nil or match?(%Note{length: ^len}, note.note_above)) do
       raise ArgumentError, "Invalid note: #{inspect(note)}"
     end
+
     note
   end
 
@@ -51,7 +45,7 @@ defmodule ExComposerBot.Note do
   @doc """
   Exports this `Note` to a format that can be pasted into LilyPond
   """
-  @spec to_lily_string(t) :: String.t
+  @spec to_lily_string(t) :: String.t()
   def to_lily_string(%Note{pitch: :is_rest, length: length}) do
     "r#{length}"
   end
@@ -79,5 +73,4 @@ defmodule ExComposerBot.Note do
   defp to_lily_string_simple(note = %Note{note_above: note_above}) do
     "#{to_string_with_tie(note)} #{to_lily_string_simple(note_above)}"
   end
-
 end

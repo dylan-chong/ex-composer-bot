@@ -16,15 +16,14 @@ defmodule ExComposerBotTest.RuleOfTheOctave do
     end
 
     # TODO
-#     test "f to g" do
-#       d = Pitch.new(number: 2)
+    #     test "f to g" do
+    #       d = Pitch.new(number: 2)
 
-#       scale = Scale.c_major()
-#       expected = RomanChord.new(root: d, inversion: 1, scale: scale)
-#       next_chord = RuleOfTheOctave.next_chord(f, g, scale)
+    #       scale = Scale.c_major()
+    #       expected = RomanChord.new(root: d, inversion: 1, scale: scale)
+    #       next_chord = RuleOfTheOctave.next_chord(f, g, scale)
 
-#       assert next_chord == expected
-#     end
+    #       assert next_chord == expected
+    #     end
   end
-
 end

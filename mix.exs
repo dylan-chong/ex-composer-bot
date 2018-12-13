@@ -6,12 +6,12 @@ defmodule ExComposerBot.Mixfile do
       app: :ex_composer_bot,
       version: "0.1.0",
       elixir: "~> 1.4",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: preferred_cli_env(),
-      aliases: aliases(),
+      aliases: aliases()
     ]
   end
 
@@ -40,7 +40,8 @@ defmodule ExComposerBot.Mixfile do
       # Project dependencies
       {:credo, "~> 0.8.8", only: [:dev, :test]},
       {:excoveralls, "~> 0.7", only: :test},
-      {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false}, # TODO remove
+      # TODO remove
+      {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
 
       # Tests
@@ -48,27 +49,26 @@ defmodule ExComposerBot.Mixfile do
       {:ex_parameterized, "~> 1.3.0", only: :test, runtime: false},
 
       # Runtime dependencies
-      {:ex_structable, "~> 0.3.0"},
+      {:ex_structable, "~> 0.3.0"}
     ]
   end
 
   defp aliases do
     [
-      check: ["test", "credo"],
+      check: ["test", "credo"]
     ]
   end
 
   defp preferred_cli_env do
     [
       # Aliases
-      "check": :test,
+      check: :test,
       # Coveralls
-      "coveralls": :test,
+      coveralls: :test,
       "coveralls.travis": :test,
       "coveralls.detail": :test,
       "coveralls.post": :test,
-      "coveralls.html": :test,
+      "coveralls.html": :test
     ]
   end
-
 end
