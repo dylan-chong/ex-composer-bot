@@ -38,7 +38,7 @@ defmodule ExComposerBot.Mixfile do
   defp deps do
     [
       # Project dependencies
-      {:credo, "~> 0.8.8", only: [:dev, :test]},
+      {:credo, "~> 1.0", only: [:dev, :test]},
       {:excoveralls, "~> 0.7", only: :test},
       # TODO remove
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},

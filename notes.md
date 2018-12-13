@@ -1,6 +1,11 @@
 # Composition bot #
 
 ## TODOs ##
+
+- Check everything working
+- Automate/document export of lilypond
+- Check disabled tests
+
 - Create pitches from string
   - roman chord
   - and more
