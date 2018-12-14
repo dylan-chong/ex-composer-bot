@@ -49,7 +49,7 @@ defmodule ExComposerBot.Mixfile do
       {:ex_parameterized, "~> 1.3.0", only: :test, runtime: false},
 
       # Runtime dependencies
-      {:ex_structable, "~> 0.3.0"}
+      {:ex_structable, "~> 0.4.0"}
     ]
   end
 
