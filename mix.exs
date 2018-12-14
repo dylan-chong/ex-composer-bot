@@ -42,7 +42,7 @@ defmodule ExComposerBot.Mixfile do
       {:excoveralls, "~> 0.7", only: :test},
       # TODO remove
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
 
       # Tests
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
