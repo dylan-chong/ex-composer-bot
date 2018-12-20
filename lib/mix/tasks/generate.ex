@@ -5,19 +5,27 @@ defmodule Mix.Tasks.Generate do
 
   alias ExComposerBot.{PartimentoChordsGenerator, FileExport}
 
+  @default_output_directory "tmp"
+  @default_output_file "output-{{TIME}}.ly"
+
   @shortdoc "Generate some music"
-  def run(_) do
-    generate_something
+  def run(args) do
+    generate_something()
   end
 
   defp generate_something do
     bass = PartimentoChordsGenerator.generate_bass()
-    s = FileExport.to_lily_string([bass, bass])
+    lily_string = FileExport.to_lily_string([bass, bass])
 
-    IO.puts("\n\n\n")
-    IO.puts(s)
-    IO.puts("\n\n\n")
+    IO.puts(lily_string)
 
-    nil
+    file_name = String.replace(@default_output_file,  "{{TIME}}", "#{System.system_time(:millisecond)}")
+    file_path = "#{@default_output_directory}/#{file_name}"
+
+    :ok = File.mkdir_p(@default_output_directory)
+    :ok = File.write(file_path, lily_string)
+
+    IO.puts("\n")
+    IO.puts("Outputted to file #{file_name}")
   end
 end
