@@ -25,6 +25,11 @@ defmodule ExComposerBot.FileExport do
     |> into_lily_file_string()
   end
 
+  def write_to(lily_string, path) do
+    File.mkdir_p!(Path.dirname(path))
+    File.write!(path, lily_string)
+  end
+
   defp into_lily_file_string(voices_string)
        when is_bitstring(voices_string) do
     """

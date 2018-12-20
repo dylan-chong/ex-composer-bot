@@ -12,12 +12,10 @@ defmodule Mix.Tasks.Generate do
 
   defp generate_something(path \\ default_file_path()) do
     bass = PartimentoChordsGenerator.generate_bass()
-    lily_string = FileExport.to_lily_string([bass, bass])
+    FileExport.to_lily_string([bass, bass])
+    FileExport.write_to(lily_string, path)
 
     IO.puts(lily_string)
-
-    File.mkdir_p!(Path.dirname(path))
-    File.write!(path, lily_string)
 
     IO.puts("\n")
     IO.puts("Outputted to file: #{path}")
