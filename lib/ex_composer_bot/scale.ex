@@ -71,7 +71,9 @@ defmodule ExComposerBot.Scale do
   end
 
   @doc """
-  Gets the degree (1-based) of the pitch in the scale.
+  Gets the degree (1-indexed) of the pitch in the scale.
+
+  It is 1-indexed to be consistent with musical terminology.
 
       iex> Scale.degree_of(Scale.c_major(), Pitch.new(number: 0))
       1

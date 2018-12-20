@@ -1,5 +1,5 @@
 defmodule ExComposerBotTest.FileExport do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   alias ExComposerBot.FileExport
 
   describe "to_lily_string converts to LilyPond format for " do
@@ -17,16 +17,6 @@ defmodule ExComposerBotTest.FileExport do
       """
 
       assert string_tokens(text) == string_tokens(expected)
-    end
-
-    @tag :todo
-    test "temp" do
-      #       alias ExComposerBot.{PartimentoChordsGenerator}
-      #       bass = PartimentoChordsGenerator.generate_bass
-      #       s = FileExport.to_lily_string [bass, bass]
-      #       IO.puts "\n\n\n#{s}\n\n\n"
-      #       require IEx
-      #       IEx.pry
     end
   end
 

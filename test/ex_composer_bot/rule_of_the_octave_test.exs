@@ -1,5 +1,5 @@
 defmodule ExComposerBotTest.RuleOfTheOctave do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   alias ExComposerBot.{RuleOfTheOctave, Pitch, Scale, Chord.RomanChord}
 
   describe "next_chord for the bass" do

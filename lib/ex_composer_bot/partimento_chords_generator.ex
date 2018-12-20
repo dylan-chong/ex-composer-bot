@@ -8,7 +8,7 @@ defmodule ExComposerBot.PartimentoChordsGenerator do
   @spec generate_bass :: Voice.t()
   def generate_bass do
     scale = Scale.c_major()
-    first_note = Note.new(pitch: Scale.at(scale, 0))
+    first_note = Note.new(pitch: Scale.at(scale, 1))
     Voice.new(notes: generate_bass([first_note], scale, 7))
   end
 

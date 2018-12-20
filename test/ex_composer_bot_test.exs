@@ -1,4 +1,4 @@
 defmodule ExComposerBotTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest ExComposerBot
 end

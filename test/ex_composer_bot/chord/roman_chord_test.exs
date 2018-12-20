@@ -1,5 +1,5 @@
 defmodule ExComposerBotTest.RomanChordTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   alias ExComposerBot.{Scale, Chord.RomanChord, Pitch}
   doctest RomanChord, import: true
 
