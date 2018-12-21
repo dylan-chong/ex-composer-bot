@@ -17,13 +17,20 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/composer_bot>.
 
-# Install `lilypond` commandline tool
+### Install `lilypond` commandline tool
 
 One Mac OS, I would recommend using `brew cask install lilypond`. Otherwise,
 try installing from <http://lilypond.org/download.html>.
 
 ## Instructions
 
-Running: See the module documentation in `lib/mix/tasks/generate.ex`
+### Running
 
-Tests: `mix test` or `mix test.watch`
+See the module documentation in `lib/mix/tasks/generate.ex`
+
+Currently, my process to listen to the outputted midi files is to open the midi
+file in Sibelius. Other options exist
+
+### Tests
+
+`mix test` or `mix test.watch`

@@ -2,7 +2,7 @@ defmodule Mix.Tasks.Generate do
   @moduledoc """
   Generate some music (see tests for more information)
 
-      mix generate output_directory
+      mix generate [output_directory]
   """
 
   use Mix.Task
