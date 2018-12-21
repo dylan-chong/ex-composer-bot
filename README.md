@@ -19,6 +19,6 @@ be found at [https://hexdocs.pm/composer_bot](https://hexdocs.pm/composer_bot).
 
 ## Instructions
 
-Running: `mix generate`
+Running: See the module documentation in `lib/mix/tasks/generate.ex`
 
 Tests: `mix test` or `mix test.watch`
