@@ -15,7 +15,12 @@ end
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/composer_bot](https://hexdocs.pm/composer_bot).
+be found at <https://hexdocs.pm/composer_bot>.
+
+# Install `lilypond` commandline tool
+
+One Mac OS, I would recommend using `brew cask install lilypond`. Otherwise,
+try installing from <http://lilypond.org/download.html>.
 
 ## Instructions
 
