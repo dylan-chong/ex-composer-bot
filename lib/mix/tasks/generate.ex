@@ -24,21 +24,24 @@ defmodule Mix.Tasks.Generate do
   end
 
   defp run_conversion(output_directory, lily_pond_file_path) do
-    report_conversion_results System.cmd("lilypond", [
-      "--silent",
-      "--output",
-      output_directory,
-      lily_pond_file_path
-    ]), output_directory
+    report_conversion_results(
+      System.cmd("lilypond", [
+        "--silent",
+        "--output",
+        output_directory,
+        lily_pond_file_path
+      ]),
+      output_directory
+    )
   end
 
   defp report_conversion_results({_, 0}, output_directory) do
-    IO.puts "Successfully created files: #{Enum.join(File.ls!(output_directory), ", ")}"
-    IO.puts "  in directory: #{output_directory}"
+    IO.puts("Successfully created files: #{Enum.join(File.ls!(output_directory), ", ")}")
+    IO.puts("  in directory: #{output_directory}")
   end
 
   defp report_conversion_results({_, error_code}, _) do
-    IO.puts "Failed to convert lily pond with the exit code #{error_code}"
+    IO.puts("Failed to convert lily pond with the exit code #{error_code}")
   end
 
   defp generate_lily_string do
