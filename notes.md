@@ -2,6 +2,10 @@
 
 ## TODOs ##
 
+- Generate a randomly moving baseline that starts and ends on the tonic
+- Finished implementing the rule of the octave
+- Output the list of chords as a multiple pitch note
+
 - Create pitches from string
   - roman chord
   - and more

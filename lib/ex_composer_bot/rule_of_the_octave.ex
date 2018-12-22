@@ -1,6 +1,7 @@
 defmodule ExComposerBot.RuleOfTheOctave do
   @moduledoc """
-  Follows the rules described here:
+  Follows the rules described in the link below to pick the next chord given
+  the current and previous bass notes.
   http://faculty-web.at.northwestern.edu/music/gjerdingen/partimenti/aboutParti/ruleOfTheOctave.htm
   """
 
