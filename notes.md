@@ -2,7 +2,7 @@
 
 ## TODOs ##
 
-- Generate a randomly moving baseline that starts and ends on the tonic
+- Get the generate_chord function working
 - Finished implementing the rule of the octave
 - Output the list of chords as a multiple pitch note
 
@@ -37,7 +37,7 @@
       - E.g. “Exciting, or blissful”
     - |> High level countour
       - Look up?: alternative, abstract, representations of notation for
-        ideas
+      ideas
     - |> Musical Form
     - |> Phrasing?
     - |> Collect to Intent (returned)

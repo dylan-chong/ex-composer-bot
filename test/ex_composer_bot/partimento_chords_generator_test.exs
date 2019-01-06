@@ -1,11 +1,9 @@
 defmodule ExComposerBotTest.PartimentoChordsGenerator do
   @moduledoc false
   use ExUnit.Case, async: true
-  alias ExComposerBot.{PartimentoChordsGenerator}
+  alias ExComposerBot.{PartimentoChordsGenerator, Voice, Note}
 
-  test "generate does not crash" do
-    PartimentoChordsGenerator.generate_bass()
+  test "generate_bass/1 create a voice containing multiple notes" do
+    %Voice{notes: [%Note{} | _]} = PartimentoChordsGenerator.generate_bass(number_of_notes: 3)
   end
-
-  # TODO more tests
 end

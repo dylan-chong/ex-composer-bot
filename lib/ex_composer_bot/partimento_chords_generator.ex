@@ -3,24 +3,22 @@ defmodule ExComposerBot.PartimentoChordsGenerator do
   Generates the chords and basic bassline for a Partimento.
   """
 
-  alias ExComposerBot.{Scale, Note, Voice}
+  alias ExComposerBot.{Scale, Note, Voice, Pitch}
 
   def generate_bass(options \\ []) do
-    [number_of_notes: number_of_notes, scale: scale] =
+    %{number_of_notes: number_of_notes, scale: scale} =
       Enum.into(
         options,
-        # 4 bars of 4/4 + end note
-        number_of_notes: 4 * 4 + 1,
-        scale: Scale.c_major()
+        %{
+          # 4 bars of 4/4 + end note
+          number_of_notes: 4 * 4 + 1,
+          scale: Scale.c_major()
+        }
       )
 
     first_note = Note.new(pitch: Scale.at(scale, 1))
-    bass = generate_bass([first_note], scale, number_of_notes)
+    bass = generate_bass([first_note], scale, number_of_notes - 1)
     Voice.new(notes: bass)
-  end
-
-  def generate_chords(bass = %Voice{}) do
-    raise "TODO: Make sure rule of the octave is implemented"
   end
 
   defp generate_bass(notes, _scale = %Scale{}, 0) when is_list(notes) do
@@ -46,5 +44,9 @@ defmodule ExComposerBot.PartimentoChordsGenerator do
 
     [new_note | notes]
     |> generate_bass(scale, notes_left - 1)
+  end
+
+  def generate_chords(bass = [%Pitch{} | _]) do
+    raise "TODO: Make sure rule of the octave is implemented"
   end
 end
