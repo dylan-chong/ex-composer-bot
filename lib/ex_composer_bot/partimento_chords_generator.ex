@@ -3,8 +3,11 @@ defmodule ExComposerBot.PartimentoChordsGenerator do
   Generates the chords and basic bassline for a Partimento.
   """
 
-  alias ExComposerBot.{Scale, Note, Voice, Pitch}
+  alias ExComposerBot.{Scale, Note, Voice, Pitch, RuleOfTheOctave, Chord.RomanChord}
 
+  @doc """
+  Generates a voice containing a list of bass notes.
+  """
   def generate_bass(options \\ []) do
     %{number_of_notes: number_of_notes, scale: scale} =
       Enum.into(
@@ -17,17 +20,17 @@ defmodule ExComposerBot.PartimentoChordsGenerator do
       )
 
     first_note = Note.new(pitch: Scale.at(scale, 1))
-    bass = generate_bass([first_note], scale, number_of_notes - 1)
-    Voice.new(notes: bass)
+    bass = do_generate_bass([first_note], scale, number_of_notes - 1)
+    Voice.new(notes: Enum.reverse(bass))
   end
 
-  defp generate_bass(notes, _scale = %Scale{}, 0) when is_list(notes) do
+  defp do_generate_bass(notes, _scale = %Scale{}, 0) when is_list(notes) do
     notes
   end
 
   # scale - An ascending list of pitches of a diatonic scale
   # notes_left - Number of notes to add
-  defp generate_bass(
+  defp do_generate_bass(
          notes = [last_note = %Note{} | _],
          scale = %Scale{},
          notes_left
@@ -43,10 +46,28 @@ defmodule ExComposerBot.PartimentoChordsGenerator do
     new_note = last_note |> Note.put(pitch: new_pitch)
 
     [new_note | notes]
-    |> generate_bass(scale, notes_left - 1)
+    |> do_generate_bass(scale, notes_left - 1)
   end
 
-  def generate_chords(bass = [%Pitch{} | _]) do
-    raise "TODO: Make sure rule of the octave is implemented"
+  @doc """
+  Generates a list of chords, to suit the given bassline
+  """
+  def generate_chords(bass = %Voice{notes: notes}, scale = %Scale{}) do
+    tonic = List.first(notes).pitch
+
+    unless Scale.degree_of(scale, tonic) == 1 do
+      raise "Starting on a non-tonic chord is not supported yet"
+    end
+
+    tonic_chord = RomanChord.new(root: tonic, scale: scale)
+    chords = do_generate_chords(tl(notes), scale, [tonic_chord])
+    Enum.reverse(chords)
+  end
+
+  defp do_generate_chords([], _, chords), do: chords
+
+  defp do_generate_chords([bass_note | remaining_bass], scale = %Scale{}, chords) do
+    # TODO NEXT: build up the list of cords
+    raise "TODO: "
   end
 end
