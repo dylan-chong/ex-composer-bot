@@ -3,7 +3,7 @@ defmodule ExComposerBot.FileExport do
 
   alias ExComposerBot.{Voice}
 
-  @version_string "\\version \"2.19.82\""
+  @version_string "\\version \"2.18.2\""
 
   @spec to_lily_string(list(Voice.t())) :: String.t()
   def to_lily_string(_voices = []) do
@@ -12,8 +12,6 @@ defmodule ExComposerBot.FileExport do
 
   def to_lily_string([top = %Voice{}, bottom = %Voice{}]) do
     """
-    #{@version_string}
-
     \\new Staff <<
       \\key c \\major
       \\clef treble
@@ -37,6 +35,8 @@ defmodule ExComposerBot.FileExport do
   defp into_lily_file_string(voices_string)
        when is_bitstring(voices_string) do
     """
+    #{@version_string}
+
     \\score {
 
       \\absolute <<

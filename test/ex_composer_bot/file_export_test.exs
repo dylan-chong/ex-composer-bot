@@ -7,6 +7,8 @@ defmodule ExComposerBotTest.FileExport do
       text = FileExport.to_lily_string([])
 
       expected = """
+      \\version "2.18.2"
+
       \\score {
         \\absolute <<
           \\time 4/4
