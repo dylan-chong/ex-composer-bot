@@ -13,6 +13,15 @@ defmodule ExComposerBotTest.PartimentoChordsGenerator do
 
       assert length(notes) == 3
     end
+
+    test "a list where the first note is the tonic" do
+      scale = Scale.c_major()
+
+      %Voice{notes: [first_note | _]} =
+        PartimentoChordsGenerator.generate_bass(number_of_notes: 3, scale: scale)
+
+      assert first_note.pitch == hd(scale.pitches)
+    end
   end
 
   describe "generate_chords/1 creates" do
