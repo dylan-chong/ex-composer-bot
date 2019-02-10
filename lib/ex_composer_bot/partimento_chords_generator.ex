@@ -52,22 +52,33 @@ defmodule ExComposerBot.PartimentoChordsGenerator do
   @doc """
   Generates a list of chords, to suit the given bassline
   """
-  def generate_chords(bass = %Voice{notes: notes}, scale = %Scale{}) do
-    tonic = List.first(notes).pitch
+  def generate_chords(%Voice{notes: bass_notes}, scale = %Scale{}) do
+    tonic_note = List.first(bass_notes)
+    tonic_pitch = tonic_note.pitch
 
-    unless Scale.degree_of(scale, tonic) == 1 do
+    unless Scale.degree_of(scale, tonic_pitch) == 1 do
       raise "Starting on a non-tonic chord is not supported yet"
     end
 
-    tonic_chord = RomanChord.new(root: tonic, scale: scale)
-    chords = do_generate_chords(tl(notes), scale, [tonic_chord])
+    tonic_chord = RomanChord.new(root: tonic_pitch, scale: scale)
+    chords = do_generate_chords(bass_notes, scale, [tonic_chord])
     Enum.reverse(chords)
   end
 
-  defp do_generate_chords([], _, chords), do: chords
+  defp do_generate_chords([_], _, chords), do: chords
 
-  defp do_generate_chords([bass_note | remaining_bass], scale = %Scale{}, chords) do
-    # TODO NEXT: build up the list of cords
-    raise "TODO: "
+  defp do_generate_chords(
+         [current_bass | future_bass = [next_bass | _]],
+         scale = %Scale{},
+         chords
+       ) do
+    next_chord =
+      RuleOfTheOctave.next_chord(
+        next_bass.pitch,
+        current_bass.pitch,
+        scale
+      )
+
+    do_generate_chords(future_bass, scale, [next_chord | chords])
   end
 end
