@@ -7,7 +7,7 @@ defmodule ExComposerBot.Chord.RomanChord do
   alias ExComposerBot.{Chord.RomanChord, Scale, Pitch}
 
   @doc """
-  * :root - Root degree of the chord. (The root is not the base note if the
+  * :root - Root Pitch of the chord. (The root is not the base note if the
   chord is not an root position). When calling `new/2`, you can pass a scale
   degree (as a `ExComposerBot.Pitch` - the octave is ignored) provided it is in
   the given `ExComposerBot.Scale`, or degree number (`integer`) (see

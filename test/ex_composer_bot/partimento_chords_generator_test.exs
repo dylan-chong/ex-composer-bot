@@ -31,5 +31,12 @@ defmodule ExComposerBotTest.PartimentoChordsGenerator do
 
       assert length(chords) == 3
     end
+
+    test "a list where the first chord is the tonic", %{scale: scale, bass: bass} do
+      [first_chord | _] = PartimentoChordsGenerator.generate_chords(bass, scale)
+
+      assert first_chord.root == hd(scale.pitches)
+      assert first_chord.inversion == 0
+    end
   end
 end
