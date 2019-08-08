@@ -2,8 +2,9 @@
 
 ## TODOs ##
 
-- Get the generate_chord function working
-- Finished implementing the rule of the octave
+- Make do_generate_bass not select the tonic chord, but rather get the
+  RuleOfTheOctave.next_chord to accept nil
+- Finish implementing the rule of the octave
 - Output the list of chords as a multiple pitch note
 - Update generate.ex to use chords
 

@@ -5,7 +5,8 @@ defmodule ExComposerBotTest.PartimentoChordsGenerator do
 
   describe "generate_bass/1 creates" do
     test "a voice containing multiple notes" do
-      %Voice{notes: [%Note{} | _]} = PartimentoChordsGenerator.generate_bass(number_of_notes: 3)
+      %Voice{notes: [%Note{} | _]} =
+        PartimentoChordsGenerator.generate_bass(number_of_notes: 3)
     end
 
     test "a list of length equal to the bass length" do
